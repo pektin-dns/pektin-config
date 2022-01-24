@@ -3,6 +3,7 @@ import yaml from "yaml";
 import { promises as fs } from "fs";
 import { PektinConfig } from "./types";
 import _ from "lodash";
+import { colors } from "./colors.js";
 
 export const checkConfig = async (inputPath: string, schemaPath: string) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: "utf-8" }));
@@ -18,32 +19,31 @@ export const checkConfig = async (inputPath: string, schemaPath: string) => {
     // domain must be valid if service is enabled
     [config.ui, config.api, config.vault, config.recursor].forEach((e, i) => {
         const s = ["ui", "api", "vault", "recursor"];
-        if (e.enabled && e.domain.length < 4)
-            throw Error(`${s[i]} is enabled but it's domain is invalid`);
+        if (e.enabled && e.domain.length < 4) err(`${s[i]} is enabled but it's domain is invalid`);
     });
 
     // nodes must contain exactly one main node
     if (config.nodes.filter(node => node.main === true).length !== 1)
-        throw Error(`nodes must contain exactly one main node`);
+        err(`nodes must contain exactly one main node`);
 
     // if node is not main it must contain a setup object
     if (
         config.nodes.filter(node => node.main !== true && typeof node.setup !== "object").length !==
         0
     )
-        throw Error(`nodes that are not main must contain a setup object`);
+        err(`nodes that are not main must contain a setup object`);
 
     // nodes that are main cant contain a setup object
     if (
         config.nodes.filter(node => node.main === true && typeof node.setup !== "undefined")
             .length !== 0
     ) {
-        throw Error(`the main node can't contain a setup object`);
+        err(`the main node can't contain a setup object`);
     }
 
     // nodes must have a minium of one ip or one legacyIp
     if (config.nodes.filter(node => !node.ips?.length && !node.legacyIps?.length).length !== 0) {
-        throw Error(`nodes must have a minium of one ip or one legacyIp`);
+        err(`nodes must have a minium of one ip or one legacyIp`);
     }
 
     {
@@ -51,7 +51,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string) => {
         if (
             Array.from(new Set(config.nodes.map(node => node.name))).length !== config.nodes.length
         ) {
-            throw Error("Nodes must have distinct names");
+            err("Nodes must have distinct names");
         }
     }
 
@@ -66,11 +66,11 @@ export const checkConfig = async (inputPath: string, schemaPath: string) => {
             });
             // check if a main ns is present
             if (mainNs.length === 0) {
-                throw Error("A domain must have a primary nameserver");
+                err("A domain must have a primary nameserver");
             }
             // check if nameserver has only one main ns
             if (hasDuplicates(mainNs)) {
-                throw Error("A domain can only have one main nameserver");
+                err("A domain can only have one main nameserver");
             }
         }
         {
@@ -86,7 +86,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string) => {
                 return hasMain;
             });
             if (!allHaveMain) {
-                throw Error("Every distinct domain must have a main nameserver");
+                err("Every distinct domain must have a main nameserver");
             }
         }
         {
@@ -95,7 +95,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string) => {
                 Array.from(new Set(config.nameservers.map(ns => ns.subDomain + "." + ns.domain)))
                     .length !== config.nameservers.length
             ) {
-                throw Error("Nameservers cant have duplicates");
+                err("Nameservers cant have duplicates");
             }
         }
         {
@@ -104,14 +104,18 @@ export const checkConfig = async (inputPath: string, schemaPath: string) => {
             const nodes = new Set(config.nodes.map(node => node.name));
             const distinctNsNodes = new Set(config.nameservers.map(ns => ns.node));
             if (!_.isEqual(nodes, distinctNsNodes)) {
-                throw Error("Nameservers nodes dont overlap with nodes");
+                err("Nameservers nodes dont overlap with nodes");
             }
         }
     }
 
     // if certificates are enabled the letsencrypt email must be set
     if (config.certificates.enabled && config.certificates.letsencryptEmail.length < 6)
-        throw Error(`certificates is enabled but the letsencryptEmail is invalid`);
+        err(`certificates is enabled but the letsencryptEmail is invalid`);
 
-    console.log("Config is valid");
+    console.log(`${colors.bold}${colors.fg.green}Config is valid${colors.reset}`);
+};
+
+const err = (message: string) => {
+    throw Error(`${colors.boldRed}${message}${colors.reset}`);
 };
