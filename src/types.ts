@@ -9,53 +9,39 @@ export interface PektinConfig {
   ui: {
     enabled: boolean;
     domain: string;
+    subDomain: string;
   };
   api: {
     enabled: boolean;
     domain: string;
+    subDomain: string;
   };
   vault: {
     enabled: boolean;
     domain: string;
+    subDomain: string;
   };
   recursor: {
     enabled: boolean;
     domain: string;
+    subDomain: string;
   };
-  nodes: [
-    {
-      main?: boolean;
-      ips?: [string, ...string[]];
-      legacyIps?: [string, ...string[]];
-      name: string;
-      setup?: {
-        system: string;
-        root: {
-          disableSystemdResolved: boolean;
-          installDocker: boolean;
-        };
-        cloneRepo: boolean;
-        setup: boolean;
-        start: boolean;
+  nodes: {
+    main?: boolean;
+    ips?: [string, ...string[]];
+    legacyIps?: [string, ...string[]];
+    name: string;
+    setup?: {
+      system: string;
+      root: {
+        disableSystemdResolved: boolean;
+        installDocker: boolean;
       };
-    },
-    ...{
-      main?: boolean;
-      ips?: [string, ...string[]];
-      legacyIps?: [string, ...string[]];
-      name: string;
-      setup?: {
-        system: string;
-        root: {
-          disableSystemdResolved: boolean;
-          installDocker: boolean;
-        };
-        cloneRepo: boolean;
-        setup: boolean;
-        start: boolean;
-      };
-    }[]
-  ];
+      cloneRepo: boolean;
+      setup: boolean;
+      start: boolean;
+    };
+  }[];
   nameservers?: [
     {
       subDomain?: string;

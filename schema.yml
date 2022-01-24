@@ -9,8 +9,11 @@ properties:
                 type: boolean
             domain:
                 type: string
+            subDomain:
+                type: string
         required:
             - enabled
+            - subDomain
             - domain
     api:
         type: object
@@ -20,8 +23,11 @@ properties:
                 type: boolean
             domain:
                 type: string
+            subDomain:
+                type: string
         required:
             - enabled
+            - subDomain
             - domain
     vault:
         type: object
@@ -31,8 +37,11 @@ properties:
                 type: boolean
             domain:
                 type: string
+            subDomain:
+                type: string
         required:
             - enabled
+            - subDomain
             - domain
     recursor:
         type: object
@@ -42,8 +51,11 @@ properties:
                 type: boolean
             domain:
                 type: string
+            subDomain:
+                type: string
         required:
             - enabled
+            - subDomain
             - domain
     nodes:
         type: array
