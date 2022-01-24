@@ -1,5 +1,5 @@
 {
-    "name": "@pektin/check-config",
+    "name": "@pektin/config",
     "description": "config checker for the pektin dns server",
     "version": "1.0.0",
     "main": "dist/js/index.js",
@@ -28,13 +28,15 @@
     ],
     "devDependencies": {
         "@types/node": "^16.11.12",
-        "typescript": "^4.4.4"
+        "typescript": "^4.4.4",
+        "json-schema-to-typescript": "^10.1.5"
     },
     "scripts": {
         "build": "tsc",
         "start": "tsc --watch",
         "check-config": "node dist/js/index.js",
         "before-publish": "yarn build; yarn compile-policies; yarn compile-deno",
-        "compile-deno": "sh scripts/compile-deno.sh"
+        "compile-deno": "sh scripts/compile-deno.sh",
+        "schema-to-ts": "node scripts/schema-to-ts.js"
     }
 }
