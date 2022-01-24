@@ -5,13 +5,17 @@ import { PektinConfig } from "./types";
 import _ from "lodash";
 import { colors } from "./colors.js";
 
-export const checkConfig = async (inputPath: string, schemaPath: string) => {
+export const checkConfig = async (
+    inputPath: string,
+    schemaPath: string,
+    mode: "yaml" | "json" = "yaml"
+) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: "utf-8" }));
     const ajv = new Ajv({ strictTuples: false });
 
     const validate = ajv.compile(schema);
-    const jsonInput = await fs.readFile(inputPath, { encoding: "utf-8" });
-    const config = JSON.parse(jsonInput) as PektinConfig;
+    const input = await fs.readFile(inputPath, { encoding: "utf-8" });
+    const config: PektinConfig = mode === "yaml" ? yaml.parse(input) : JSON.parse(input);
     const valid = validate(config);
 
     if (!valid) throw validate.errors;
