@@ -8,7 +8,7 @@ import { colors } from "./colors.js";
 export const checkConfig = async (
     inputPath: string,
     schemaPath: string,
-    mode: "yaml" | "json" = "yaml"
+    mode: "yaml" | "json" = "json"
 ) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: "utf-8" }));
     const ajv = new Ajv({ strictTuples: false });
