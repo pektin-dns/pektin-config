@@ -4,12 +4,12 @@ import { promises as fs } from "fs";
 import { PektinConfig } from "./types";
 import _ from "lodash";
 
-export const checkConfig = async (path: string) => {
-    const schema = yaml.parse(await fs.readFile("schema.yml", { encoding: "utf-8" }));
+export const checkConfig = async (inputPath: string, schemaPath: string) => {
+    const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: "utf-8" }));
     const ajv = new Ajv({ strictTuples: false });
 
     const validate = ajv.compile(schema);
-    const jsonInput = await fs.readFile(path, { encoding: "utf-8" });
+    const jsonInput = await fs.readFile(inputPath, { encoding: "utf-8" });
     const config = JSON.parse(jsonInput) as PektinConfig;
     const valid = validate(config);
 
