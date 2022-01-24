@@ -1,10 +1,11 @@
 import Ajv from "ajv";
 import yaml from "yaml";
 import { promises as fs } from "fs";
+import _ from "lodash";
 const schema = yaml.parse(await fs.readFile("schema.yml", { encoding: "utf-8" }));
 const ajv = new Ajv({ strictTuples: false });
 const validate = ajv.compile(schema);
-const jsonInput = await fs.readFile("examples/pektin-test.json", { encoding: "utf-8" });
+const jsonInput = await fs.readFile("examples/pektin.json", { encoding: "utf-8" });
 const config = JSON.parse(jsonInput);
 const valid = validate(config);
 if (!valid)
@@ -30,5 +31,64 @@ if (config.nodes.filter(node => node.main === true && typeof node.setup !== "und
 if (config.nodes.filter(node => { var _a, _b; return !((_a = node.ips) === null || _a === void 0 ? void 0 : _a.length) && !((_b = node.legacyIps) === null || _b === void 0 ? void 0 : _b.length); }).length !== 0) {
     throw Error(`nodes must have a minium of one ip or one legacyIp`);
 }
+{
+    // check if there are duplicate nodes
+    if (Array.from(new Set(config.nodes.map(node => node.name))).length !== config.nodes.length) {
+        throw Error("Nodes must have distinct names");
+    }
+}
+if (config.nameservers) {
+    {
+        const hasDuplicates = (array) => new Set(array).size !== array.length;
+        const mainNs = [];
+        config.nameservers.forEach(ns => {
+            if (ns.main) {
+                mainNs.push(ns.domain);
+            }
+        });
+        // check if a main ns is present
+        if (mainNs.length === 0) {
+            throw Error("A domain must have a primary nameserver");
+        }
+        // check if nameserver has only one main ns
+        if (hasDuplicates(mainNs)) {
+            throw Error("A domain can only have one main nameserver");
+        }
+    }
+    {
+        // check if all present domains have a main ns
+        const distinctDomains = Array.from(new Set(config.nameservers.map(ns => ns.domain)));
+        const allHaveMain = distinctDomains.every(d => {
+            var _a;
+            let hasMain = false;
+            (_a = config.nameservers) === null || _a === void 0 ? void 0 : _a.forEach(ns => {
+                if (d === ns.domain && ns.main) {
+                    hasMain = true;
+                }
+            });
+            return hasMain;
+        });
+        if (!allHaveMain) {
+            throw Error("Every distinct domain must have a main nameserver");
+        }
+    }
+    {
+        // check if there are duplicate nameservers
+        if (Array.from(new Set(config.nameservers.map(ns => ns.subDomain + "." + ns.domain)))
+            .length !== config.nameservers.length) {
+            throw Error("Nameservers cant have duplicates");
+        }
+    }
+    {
+        // check if nodes names overlap with nameservers nodes
+        const nodes = new Set(config.nodes.map(node => node.name));
+        const distinctNsNodes = new Set(config.nameservers.map(ns => ns.node));
+        if (!_.isEqual(nodes, distinctNsNodes)) {
+            throw Error("Nameservers nodes dont overlap with nodes");
+        }
+    }
+}
+// if certificates are enabled the letsencrypt email must be set
 if (config.certificates.enabled && config.certificates.letsencryptEmail.length < 6)
     throw Error(`certificates is enabled but the letsencryptEmail is invalid`);
+console.log("Config is valid");

@@ -240,3 +240,4 @@ required:
     - reverseProxy
     - build
     - devmode
+    - nameservers

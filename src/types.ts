@@ -26,23 +26,41 @@ export interface PektinConfig {
     domain: string;
     subDomain: string;
   };
-  nodes: {
-    main?: boolean;
-    ips?: [string, ...string[]];
-    legacyIps?: [string, ...string[]];
-    name: string;
-    setup?: {
-      system: string;
-      root: {
-        disableSystemdResolved: boolean;
-        installDocker: boolean;
+  nodes: [
+    {
+      main?: boolean;
+      ips?: [string, ...string[]];
+      legacyIps?: [string, ...string[]];
+      name: string;
+      setup?: {
+        system: string;
+        root: {
+          disableSystemdResolved: boolean;
+          installDocker: boolean;
+        };
+        cloneRepo: boolean;
+        setup: boolean;
+        start: boolean;
       };
-      cloneRepo: boolean;
-      setup: boolean;
-      start: boolean;
-    };
-  }[];
-  nameservers?: [
+    },
+    ...{
+      main?: boolean;
+      ips?: [string, ...string[]];
+      legacyIps?: [string, ...string[]];
+      name: string;
+      setup?: {
+        system: string;
+        root: {
+          disableSystemdResolved: boolean;
+          installDocker: boolean;
+        };
+        cloneRepo: boolean;
+        setup: boolean;
+        start: boolean;
+      };
+    }[]
+  ];
+  nameservers: [
     {
       subDomain?: string;
       domain: string;
