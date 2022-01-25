@@ -95,6 +95,7 @@ network:
 `;
         }
         file = `echo '${file}' > /etc/netplan/60-floating-ip.yaml\nnetplan apply`;
+        await fs.mkdir(outDir, { recursive: true });
         await fs.writeFile(path.join(outDir, node.name + "-configure-floating-ips.sh"), file);
     }
 };
