@@ -6,7 +6,6 @@ import { FloatingIpResponse } from "./types";
 export const mergeConfig = async (configPath: string, floatingIpResponseFolderPath: string) => {
     const config: PektinConfig = JSON.parse(await fs.readFile(configPath, { encoding: "utf8" }));
     const files = await fs.readdir(floatingIpResponseFolderPath, { encoding: "utf-8" });
-    console.log(files);
 
     const nodes = Array.from(
         new Set(files.map(filePath => filePath.substring(0, filePath.indexOf("--"))))
