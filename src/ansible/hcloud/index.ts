@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { PektinConfig } from "../../types";
-import { FloatingIpResponse } from "./types";
+import { PektinConfig } from "../../types.js";
+import { FloatingIpResponse } from "./types.js";
 
 export const mergeConfig = async (configPath: string, floatingIpResponseFolderPath: string) => {
     const config: PektinConfig = JSON.parse(await fs.readFile(configPath, { encoding: "utf8" }));

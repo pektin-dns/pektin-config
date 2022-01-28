@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 import yaml from "yaml";
 import { promises as fs } from "fs";
-import { PektinConfig } from "./types";
+import { PektinConfig } from "./types.js";
 import _ from "lodash";
 import { colors } from "./colors.js";
 
