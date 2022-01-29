@@ -5,6 +5,20 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type AnsibleConfig = Hetzner;
+export type AnsibleConfigType = "hetzner";
+export type HetznerServerType =
+  | "cx11"
+  | "cpx11"
+  | "cx21"
+  | "cpx21"
+  | "cx31"
+  | "cpx31"
+  | "cx41"
+  | "cpx41"
+  | "cx51"
+  | "cpx51";
+
 export interface PektinConfig {
   ui: {
     enabled: boolean;
@@ -32,6 +46,7 @@ export interface PektinConfig {
       ips?: [string, ...string[]];
       legacyIps?: [string, ...string[]];
       name: string;
+      ansible?: AnsibleConfig;
       setup?: {
         system: string;
         root: {
@@ -48,6 +63,7 @@ export interface PektinConfig {
       ips?: [string, ...string[]];
       legacyIps?: [string, ...string[]];
       name: string;
+      ansible?: AnsibleConfig;
       setup?: {
         system: string;
         root: {
@@ -73,12 +89,12 @@ export interface PektinConfig {
     registrars?: [
       {
         registrar: "gandi";
-        domains: [string];
+        domains: [string, ...string[]];
         secretPath: string;
       },
       ...{
         registrar: "gandi";
-        domains: [string];
+        domains: [string, ...string[]];
         secretPath: string;
       }[]
     ];
@@ -110,4 +126,17 @@ export interface PektinConfig {
     enabled: boolean;
     type: "local" | "insecure-online";
   };
+  ansible?: {
+    sshKey: {
+      pubKeyPath: string;
+      pubKeyName: string;
+    };
+  };
+}
+export interface Hetzner {
+  configType: AnsibleConfigType;
+  floatingIp?: boolean;
+  floatingLegacyIp?: boolean;
+  location?: "nbg1" | "fsn1";
+  serverType?: HetznerServerType;
 }

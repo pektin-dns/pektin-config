@@ -80,9 +80,18 @@ properties:
                         type: string
                 name:
                     type: string
+                ansible:
+                    $ref: "#/definitions/AnsibleConfig"
+
                 setup:
                     type: object
                     additionalProperties: false
+                    required:
+                        - system
+                        - root
+                        - cloneRepo
+                        - setup
+                        - start
                     properties:
                         system:
                             type: string
@@ -103,12 +112,7 @@ properties:
                             type: boolean
                         start:
                             type: boolean
-                    required:
-                        - system
-                        - root
-                        - cloneRepo
-                        - setup
-                        - start
+
     nameservers:
         type: array
         minItems: 1
@@ -116,6 +120,9 @@ properties:
         items:
             - type: object
               additionalProperties: false
+              required:
+                  - domain
+                  - node
               properties:
                   subDomain:
                       type: string
@@ -125,9 +132,7 @@ properties:
                       type: string
                   main:
                       type: boolean
-              required:
-                  - domain
-                  - node
+
     registrarApi:
         type: object
         required:
@@ -141,6 +146,10 @@ properties:
                 items:
                     type: object
                     additionalProperties: false
+                    required:
+                        - registrar
+                        - domains
+                        - secretPath
                     properties:
                         registrar:
                             enum: [gandi]
@@ -148,13 +157,10 @@ properties:
                             type: array
                             minItems: 1
                             items:
-                                - type: string
+                                type: string
                         secretPath:
                             type: string
-                    required:
-                        - registrar
-                        - domains
-                        - secretPath
+
     certificates:
         type: object
         additionalProperties: false
@@ -180,6 +186,10 @@ properties:
     build:
         type: object
         additionalProperties: false
+        required:
+            - server
+            - api
+            - ui
         properties:
             server:
                 type: object
@@ -214,21 +224,37 @@ properties:
                 required:
                     - enabled
                     - path
-        required:
-            - server
-            - api
-            - ui
+
     devmode:
         type: object
         additionalProperties: false
+        required:
+            - enabled
+            - type
         properties:
             enabled:
                 type: boolean
             type:
                 enum: [local, insecure-online]
+
+    ansible:
+        type: object
+        additionalProperties: false
         required:
-            - enabled
-            - type
+            - sshKey
+        properties:
+            sshKey:
+                type: object
+                additionalProperties: false
+                properties:
+                    pubKeyPath:
+                        type: string
+                    pubKeyName:
+                        type: string
+                required:
+                    - pubKeyPath
+                    - pubKeyName
+
 required:
     - ui
     - api
@@ -241,3 +267,34 @@ required:
     - build
     - devmode
     - nameservers
+# either ansible or nodes are required
+definitions:
+    AnsibleConfigType:
+        type: string
+        enum: [hetzner]
+
+    AnsibleConfig:
+        oneOf:
+            - { $ref: "#/definitions/Hetzner" }
+
+    Hetzner:
+        type: object
+        additionalProperties: false
+        required:
+            - configType
+        properties:
+            configType:
+                $ref: "#/definitions/AnsibleConfigType"
+            floatingIp:
+                type: boolean
+            floatingLegacyIp:
+                type: boolean
+            location:
+                type: string
+                enum: [nbg1, fsn1]
+            serverType:
+                $ref: "#/definitions/HetznerServerType"
+
+    HetznerServerType:
+        type: string
+        enum: [cx11, cpx11, cx21, cpx21, cx31, cpx31, cx41, cpx41, cx51, cpx51]

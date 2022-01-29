@@ -27,15 +27,9 @@ export const checkConfig = async (
     });
 
     // nodes must contain exactly one main node
-    if (config.nodes.filter(node => node.main === true).length !== 1)
+    if (config.nodes.filter(node => node.main === true).length !== 1) {
         err(`nodes must contain exactly one main node`);
-
-    // if node is not main it must contain a setup object
-    if (
-        config.nodes.filter(node => node.main !== true && typeof node.setup !== "object").length !==
-        0
-    )
-        err(`nodes that are not main must contain a setup object`);
+    }
 
     // nodes that are main cant contain a setup object
     if (
@@ -46,8 +40,11 @@ export const checkConfig = async (
     }
 
     // nodes must have a minium of one ip or one legacyIp
-    if (config.nodes.filter(node => !node.ips?.length && !node.legacyIps?.length).length !== 0) {
-        err(`nodes must have a minium of one ip or one legacyIp`);
+    if (
+        config.nodes.filter(node => !node.ansible && !node.ips?.length && !node.legacyIps?.length)
+            .length !== 0
+    ) {
+        err(`nodes must have a minimum of one ip or one legacyIp or ansible configured`);
     }
 
     {

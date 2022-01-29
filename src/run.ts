@@ -1,3 +1,3 @@
 import { checkConfig } from "./index.js";
 
-await checkConfig("examples/pektin.json", "schema.yml");
+await checkConfig("examples/ansible-compose-hetzner.json", "pektin-config.schema.yml");
