@@ -127,10 +127,7 @@ export interface PektinConfig {
     type: "local" | "insecure-online";
   };
   ansible?: {
-    sshKey: {
-      pubKeyPath: string;
-      pubKeyName: string;
-    };
+    sshPubKeyName: string;
   };
 }
 export interface Hetzner {

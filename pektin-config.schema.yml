@@ -241,20 +241,10 @@ properties:
         type: object
         additionalProperties: false
         required:
-            - sshKey
+            - sshPubKeyName
         properties:
-            sshKey:
-                type: object
-                additionalProperties: false
-                properties:
-                    pubKeyPath:
-                        type: string
-                    pubKeyName:
-                        type: string
-                required:
-                    - pubKeyPath
-                    - pubKeyName
-
+            sshPubKeyName:
+                type: string
 required:
     - ui
     - api
