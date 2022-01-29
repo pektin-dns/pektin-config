@@ -74,8 +74,8 @@ export const createConfigureFloatingIpsScript = async (configPath: string, outDi
                 ethernets:
                     eth0:
                         addresses:
-${node.ips?.length ? "                            - " + node.ips[0] + "\n" : ""}
-${node.legacyIps?.length ? "                            - " + node.legacyIps[0] + "\n" : ""}
+${node.ips?.length ? "                            - " + node.ips[0] + "/64\n" : ""}
+${node.legacyIps?.length ? "                            - " + node.legacyIps[0] + "/32\n" : ""}
             `;
 
             file = `echo '${file}' > /etc/netplan/60-floating-ip.yaml\nnetplan apply`;
