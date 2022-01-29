@@ -16,7 +16,7 @@ export const mergeConfig = async (configPath: string, tmpPath: string) => {
             fs.readFile(path.join(tmpPath, "floating-ips", "res", node.name + "-legacyIp.json"), {
                 encoding: "utf8"
             }),
-            fs.readFile(path.join(tmpPath, "server", "res", node.name + "-server.json"), {
+            fs.readFile(path.join(tmpPath, "servers", "res", node.name + "-server.json"), {
                 encoding: "utf8"
             })
         ]);
