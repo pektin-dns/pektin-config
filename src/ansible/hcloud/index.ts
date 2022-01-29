@@ -1,53 +1,50 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { PektinConfig } from "../../types.js";
-import { FloatingIpResponse } from "./types.js";
+import { FloatingIpResponse, ServerResponse } from "./types.js";
 
-export const mergeConfig = async (configPath: string, floatingIpResponseFolderPath: string) => {
+export const mergeConfig = async (configPath: string, tmpPath: string) => {
     const config: PektinConfig = JSON.parse(await fs.readFile(configPath, { encoding: "utf8" }));
-    const files = await fs.readdir(floatingIpResponseFolderPath, { encoding: "utf-8" });
 
-    const nodes = Array.from(
-        new Set(files.map(filePath => filePath.substring(0, filePath.indexOf("--"))))
-    );
-    config.nodes = [] as unknown as PektinConfig["nodes"];
-    for (let i = 0; i < nodes.length; i++) {
-        const nodeName = nodes[i];
+    for (let i = 0; i < config.nodes.length; i++) {
+        const node = config.nodes[i];
 
-        /*@ts-ignore*/
-        config.nodes[i] = {};
-        const [ipFile, legacyIpFile] = await Promise.all([
-            fs.readFile(path.join(floatingIpResponseFolderPath, nodeName + "--ip.json"), {
+        const [ipFile, legacyIpFile, serverFile] = await Promise.all([
+            fs.readFile(path.join(tmpPath, "floating-ips", "res", node.name + "-ip.json"), {
                 encoding: "utf8"
             }),
-            fs.readFile(path.join(floatingIpResponseFolderPath, nodeName + "--legacyIp.json"), {
+            fs.readFile(path.join(tmpPath, "floating-ips", "res", node.name + "-legacyIp.json"), {
+                encoding: "utf8"
+            }),
+            fs.readFile(path.join(tmpPath, "server", "res", node.name + "-server.json"), {
                 encoding: "utf8"
             })
         ]);
 
-        const [ip, legacyIp] = [
+        const [ip, legacyIp, server] = [
             JSON.parse(ipFile) as FloatingIpResponse,
-            JSON.parse(legacyIpFile) as FloatingIpResponse
+            JSON.parse(legacyIpFile) as FloatingIpResponse,
+            JSON.parse(serverFile) as ServerResponse
         ];
 
         // sets the nodes ip in the config
-        if (ip?.hcloud_floating_ip?.ip) {
-            config.nodes[i].ips = [ip?.hcloud_floating_ip?.ip.replace("/64", "")];
+        if (node.ansible?.floatingIp) {
+            if (ip?.hcloud_floating_ip?.ip) {
+                config.nodes[i].ips = [ip?.hcloud_floating_ip?.ip.replace("/64", "")];
+            }
+        } else if (server.hcloud_server?.ipv6) {
+            config.nodes[i].ips = [server.hcloud_server?.ipv6.replace("/64", "")];
         }
         // sets the nodes legacy ip in the config
-        if (legacyIp?.hcloud_floating_ip?.ip) {
-            config.nodes[i].legacyIps = [legacyIp?.hcloud_floating_ip?.ip];
+        if (node.ansible?.floatingLegacyIp) {
+            if (legacyIp?.hcloud_floating_ip?.ip) {
+                config.nodes[i].legacyIps = [legacyIp?.hcloud_floating_ip?.ip];
+            }
+        } else if (server.hcloud_server?.ipv4_address) {
+            config.nodes[i].legacyIps = [server.hcloud_server?.ipv4_address];
         }
 
-        // get whether the node is the main node
-        if (ip?.hcloud_floating_ip && ip?.hcloud_floating_ip.labels.group === "main") {
-            config.nodes[i].main = true;
-        } else if (
-            legacyIp?.hcloud_floating_ip &&
-            legacyIp?.hcloud_floating_ip.labels.group === "main"
-        ) {
-            config.nodes[i].main = true;
-        } else {
+        if (server.hcloud_server?.labels.group !== "main") {
             config.nodes[i].setup = {
                 system: "ubuntu",
                 cloneRepo: true,
@@ -59,7 +56,6 @@ export const mergeConfig = async (configPath: string, floatingIpResponseFolderPa
                 start: true
             };
         }
-        config.nodes[i].name = nodeName;
     }
     await fs.writeFile(configPath, JSON.stringify(config, null, "    "));
 };
@@ -67,35 +63,24 @@ export const mergeConfig = async (configPath: string, floatingIpResponseFolderPa
 export const createConfigureFloatingIpsScript = async (configPath: string, outDir: string) => {
     const config: PektinConfig = JSON.parse(await fs.readFile(configPath, { encoding: "utf8" }));
 
-    const nodes = config.nodes;
-    for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i];
+    for (let i = 0; i < config.nodes.length; i++) {
+        const node = config.nodes[i];
 
-        let file = ``;
-        if (node.ips?.length) {
-            file += `
-network:
-    version: 2
-    renderer: networkd
-    ethernets:
-        eth0:
-            addresses:
-                - ${node.ips[0]}/64
-`;
+        if (node.ips?.length || node.legacyIps?.length) {
+            let file = `
+            network:
+                version: 2
+                renderer: networkd
+                ethernets:
+                    eth0:
+                        addresses:
+${node.ips?.length ? "                            - " + node.ips[0] + "\n" : ""}
+${node.legacyIps?.length ? "                            - " + node.legacyIps[0] + "\n" : ""}
+            `;
+
+            file = `echo '${file}' > /etc/netplan/60-floating-ip.yaml\nnetplan apply`;
+            await fs.mkdir(outDir, { recursive: true });
+            await fs.writeFile(path.join(outDir, node.name + "-configure-floating-ips.sh"), file);
         }
-        if (node.legacyIps?.length) {
-            file += `
-network:
-    version: 2
-    renderer: networkd
-    ethernets:
-        eth0:
-            addresses:
-                - ${node.legacyIps[0]}/32
-`;
-        }
-        file = `echo '${file}' > /etc/netplan/60-floating-ip.yaml\nnetplan apply`;
-        await fs.mkdir(outDir, { recursive: true });
-        await fs.writeFile(path.join(outDir, node.name + "-configure-floating-ips.sh"), file);
     }
 };

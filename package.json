@@ -35,7 +35,7 @@
     "scripts": {
         "build": "tsc",
         "start": "tsc --watch",
-        "check-config": "node dist/js/run.js",
+        "check-config": "node dist/js/check-config.js",
         "before-publish": "yarn build; yarn compile-deno",
         "compile-deno": "sh scripts/compile-deno.sh",
         "compile-schema": "node scripts/compile-schema.js"
