@@ -152,7 +152,7 @@ properties:
                         - secretPath
                     properties:
                         type:
-                            type: string
+                            enum: [gandi]
                         domains:
                             type: array
                             minItems: 1
