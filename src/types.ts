@@ -88,14 +88,14 @@ export interface PektinConfig {
     enabled: boolean;
     registrars?: [
       {
-        registrar: "gandi";
+        type?: string;
         domains: [string, ...string[]];
-        secretPath: string;
+        dataPath?: string;
       },
       ...{
-        registrar: "gandi";
+        type?: string;
         domains: [string, ...string[]];
-        secretPath: string;
+        dataPath?: string;
       }[]
     ];
     [k: string]: unknown;

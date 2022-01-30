@@ -151,16 +151,15 @@ properties:
                         - domains
                         - secretPath
                     properties:
-                        registrar:
-                            enum: [gandi]
+                        type:
+                            type: string
                         domains:
                             type: array
                             minItems: 1
                             items:
                                 type: string
-                        secretPath:
+                        dataPath:
                             type: string
-
     certificates:
         type: object
         additionalProperties: false
