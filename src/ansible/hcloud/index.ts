@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { PektinConfig } from "../../types.js";
+import { PektinConfig } from "../../config-types.js";
 import { FloatingIpResponse, ServerResponse } from "./types.js";
 
 export const mergeConfig = async (configPath: string, tmpPath: string) => {
