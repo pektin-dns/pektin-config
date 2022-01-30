@@ -149,7 +149,7 @@ properties:
                     required:
                         - registrar
                         - domains
-                        - secretPath
+                        - dataPath
                     properties:
                         type:
                             enum: [gandi]
