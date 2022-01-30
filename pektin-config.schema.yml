@@ -9,6 +9,7 @@ properties:
                 type: boolean
             domain:
                 type: string
+                pattern: ".*\\.$"
             subDomain:
                 type: string
         required:
