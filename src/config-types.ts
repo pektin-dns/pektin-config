@@ -1,5 +1,13 @@
 /* eslint-disable quotes */
 
+/**
+ * A valid UTF8 absolute domain name ending with a dot
+ */
+export type DomainName = string;
+/**
+ * A valid UTF8 domain name not ending with a dot
+ */
+export type SubDomain = string;
 export type AnsibleConfig = Hetzner;
 export type AnsibleConfigType = "hetzner";
 export type HetznerServerType =
@@ -13,27 +21,28 @@ export type HetznerServerType =
   | "cpx41"
   | "cx51"
   | "cpx51";
+export type SupportedRegistrars = "gandi";
 
 export interface PektinConfig {
   ui: {
     enabled: boolean;
-    domain: string;
-    subDomain: string;
+    domain: DomainName;
+    subDomain: SubDomain;
   };
   api: {
     enabled: boolean;
-    domain: string;
-    subDomain: string;
+    domain: DomainName;
+    subDomain: SubDomain;
   };
   vault: {
     enabled: boolean;
-    domain: string;
-    subDomain: string;
+    domain: DomainName;
+    subDomain: SubDomain;
   };
   recursor: {
     enabled: boolean;
-    domain: string;
-    subDomain: string;
+    domain: DomainName;
+    subDomain: SubDomain;
   };
   nodes: [
     {
@@ -73,8 +82,8 @@ export interface PektinConfig {
   ];
   nameservers: [
     {
-      subDomain?: string;
-      domain: string;
+      subDomain?: SubDomain;
+      domain: DomainName;
       node: string;
       main?: boolean;
     }
@@ -83,13 +92,13 @@ export interface PektinConfig {
     enabled: boolean;
     registrars?: [
       {
-        type: "gandi";
-        domains: [string, ...string[]];
+        type: SupportedRegistrars;
+        domains: [DomainName, ...DomainName[]];
         dataPath: string;
       },
       ...{
-        type: "gandi";
-        domains: [string, ...string[]];
+        type: SupportedRegistrars;
+        domains: [DomainName, ...DomainName[]];
         dataPath: string;
       }[]
     ];
