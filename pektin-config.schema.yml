@@ -147,7 +147,7 @@ properties:
                     type: object
                     additionalProperties: false
                     required:
-                        - registrar
+                        - type
                         - domains
                         - dataPath
                     properties:
