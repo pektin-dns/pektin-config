@@ -3,7 +3,7 @@ import yaml from "yaml";
 import { promises as fs } from "fs";
 import { PektinConfig } from "./config-types.js";
 import _ from "lodash";
-import { colors } from "@pektin/client/src/colors.js";
+import { colors } from "./utils/colors.js";
 
 export const checkConfig = async (
     inputPath: string,
@@ -11,6 +11,7 @@ export const checkConfig = async (
     mode: `yaml` | `json` = `json`
 ) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: `utf-8` }));
+    /*@ts-ignore*/
     const ajv = new Ajv({ strictTuples: false });
 
     const validate = ajv.compile(schema);
