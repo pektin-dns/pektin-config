@@ -118,20 +118,20 @@ properties:
         minItems: 1
         # one nameserver (for each domain) must have the main attribute set to true
         items:
-            - type: object
-              additionalProperties: false
-              required:
-                  - domain
-                  - node
-              properties:
-                  subDomain:
-                      $ref: "#/definitions/SubDomain"
-                  domain:
-                      $ref: "#/definitions/DomainName"
-                  node:
-                      type: string
-                  main:
-                      type: boolean
+            type: object
+            additionalProperties: false
+            required:
+                - domain
+                - node
+            properties:
+                subDomain:
+                    $ref: "#/definitions/SubDomain"
+                domain:
+                    $ref: "#/definitions/DomainName"
+                node:
+                    type: string
+                main:
+                    type: boolean
 
     registrarApi:
         type: object

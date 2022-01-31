@@ -86,7 +86,13 @@ export interface PektinConfig {
       domain: DomainName;
       node: string;
       main?: boolean;
-    }
+    },
+    ...{
+      subDomain?: SubDomain;
+      domain: DomainName;
+      node: string;
+      main?: boolean;
+    }[]
   ];
   registrarApi: {
     enabled: boolean;
