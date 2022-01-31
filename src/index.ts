@@ -3,7 +3,7 @@ import yaml from "yaml";
 import { promises as fs } from "fs";
 import { PektinConfig } from "./config-types.js";
 import _ from "lodash";
-import { colors } from "./utils/colors.js";
+import { colors } from "@pektin/client/dist/js/utils/colors.js";
 
 export const checkConfig = async (
     inputPath: string,
