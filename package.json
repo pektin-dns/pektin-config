@@ -1,7 +1,7 @@
 {
     "name": "@pektin/config",
     "description": "config checker for the pektin dns server",
-    "version": "1.0.26",
+    "version": "1.0.27",
     "main": "dist/js/index.js",
     "types": "src/index.ts",
     "license": "MIT",
@@ -12,7 +12,7 @@
         "email": "pektin@y.gy"
     },
     "dependencies": {
-        "@pektin/client": "^1.1.27",
+        "@pektin/client": "^1.1.29",
         "ajv": "^8.9.0",
         "lodash": "^4.17.21",
         "yaml": "^1.10.2"
@@ -47,6 +47,7 @@
         "check-config": "node dist/js/check-config.js",
         "before-publish": "yarn build; yarn compile-deno",
         "compile-deno": "sh scripts/compile-deno.sh",
-        "compile-schema": "node scripts/compile-schema.js"
+        "compile-schema": "node scripts/compile-schema.js",
+        "upgrade-pektin": "yarn upgrade --latest @pektin/client"
     }
 }
