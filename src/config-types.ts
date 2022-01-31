@@ -8,6 +8,14 @@ export type DomainName = string;
  * A valid UTF8 domain name not ending with a dot
  */
 export type SubDomain = string;
+/**
+ * A valid ip(ipv6) address
+ */
+export type Ip = string;
+/**
+ * A valid legacyIp(ipv4) address
+ */
+export type LegacyIp = string;
 export type AnsibleConfig = Hetzner;
 export type AnsibleConfigType = "hetzner";
 export type HetznerServerType =
@@ -22,6 +30,10 @@ export type HetznerServerType =
   | "cx51"
   | "cpx51";
 export type SupportedRegistrars = "gandi";
+/**
+ * A valid email address
+ */
+export type Email = string;
 
 export interface PektinConfig {
   ui: {
@@ -47,8 +59,8 @@ export interface PektinConfig {
   nodes: [
     {
       main?: boolean;
-      ips?: [string, ...string[]];
-      legacyIps?: [string, ...string[]];
+      ips?: [Ip, ...Ip[]];
+      legacyIps?: [LegacyIp, ...LegacyIp[]];
       name: string;
       ansible?: AnsibleConfig;
       setup?: {
@@ -64,8 +76,8 @@ export interface PektinConfig {
     },
     ...{
       main?: boolean;
-      ips?: [string, ...string[]];
-      legacyIps?: [string, ...string[]];
+      ips?: [Ip, ...Ip[]];
+      legacyIps?: [LegacyIp, ...LegacyIp[]];
       name: string;
       ansible?: AnsibleConfig;
       setup?: {
@@ -112,7 +124,7 @@ export interface PektinConfig {
   };
   certificates: {
     enabled: boolean;
-    letsencryptEmail: string;
+    letsencryptEmail: Email;
   };
   reverseProxy: {
     createTraefik: boolean;

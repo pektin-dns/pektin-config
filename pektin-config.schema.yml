@@ -8,9 +8,9 @@ properties:
             enabled:
                 type: boolean
             domain:
-                $ref: "#/definitions/DomainName"
+                $ref: "#/$defs/DomainName"
             subDomain:
-                $ref: "#/definitions/SubDomain"
+                $ref: "#/$defs/SubDomain"
         required:
             - enabled
             - subDomain
@@ -22,9 +22,9 @@ properties:
             enabled:
                 type: boolean
             domain:
-                $ref: "#/definitions/DomainName"
+                $ref: "#/$defs/DomainName"
             subDomain:
-                $ref: "#/definitions/SubDomain"
+                $ref: "#/$defs/SubDomain"
         required:
             - enabled
             - subDomain
@@ -36,9 +36,9 @@ properties:
             enabled:
                 type: boolean
             domain:
-                $ref: "#/definitions/DomainName"
+                $ref: "#/$defs/DomainName"
             subDomain:
-                $ref: "#/definitions/SubDomain"
+                $ref: "#/$defs/SubDomain"
         required:
             - enabled
             - subDomain
@@ -50,9 +50,9 @@ properties:
             enabled:
                 type: boolean
             domain:
-                $ref: "#/definitions/DomainName"
+                $ref: "#/$defs/DomainName"
             subDomain:
-                $ref: "#/definitions/SubDomain"
+                $ref: "#/$defs/SubDomain"
         required:
             - enabled
             - subDomain
@@ -72,16 +72,16 @@ properties:
                     type: array
                     minItems: 1
                     items:
-                        type: string
+                        $ref: "#/$defs/Ip"
                 legacyIps:
                     type: array
                     minItems: 1
                     items:
-                        type: string
+                        $ref: "#/$defs/LegacyIp"
                 name:
                     type: string
                 ansible:
-                    $ref: "#/definitions/AnsibleConfig"
+                    $ref: "#/$defs/AnsibleConfig"
 
                 setup:
                     type: object
@@ -125,9 +125,9 @@ properties:
                 - node
             properties:
                 subDomain:
-                    $ref: "#/definitions/SubDomain"
+                    $ref: "#/$defs/SubDomain"
                 domain:
-                    $ref: "#/definitions/DomainName"
+                    $ref: "#/$defs/DomainName"
                 node:
                     type: string
                 main:
@@ -152,12 +152,12 @@ properties:
                         - dataPath
                     properties:
                         type:
-                            $ref: "#/definitions/SupportedRegistrars"
+                            $ref: "#/$defs/SupportedRegistrars"
                         domains:
                             type: array
                             minItems: 1
                             items:
-                                $ref: "#/definitions/DomainName"
+                                $ref: "#/$defs/DomainName"
                         dataPath:
                             type: string
     certificates:
@@ -167,7 +167,7 @@ properties:
             enabled:
                 type: boolean
             letsencryptEmail:
-                type: string
+                $ref: "#/$defs/Email"
         required:
             - enabled
             - letsencryptEmail
@@ -257,16 +257,27 @@ required:
     - devmode
     - nameservers
 
-definitions:
+$defs:
     DomainName:
         type: string
         description: "A valid UTF8 absolute domain name ending with a dot"
-        pattern: "^.*\\.$"
+        pattern: '^(?:[a-z0-9_](?:[a-z0-9-_]{0,61}[a-z0-9_]|[-]{2,}?)?\.)*[a-z0-9-_][a-z0-9-]{0,61}[a-z0-9]{1,61}\.$'
     SubDomain:
         type: string
         description: "A valid UTF8 domain name not ending with a dot"
-        pattern: "^.*(?<!\\.)$"
-
+        pattern: '^(?:[a-z0-9_](?:[a-z0-9-_]{0,61}[a-z0-9_]|[-]{2,}?)?\.)*[a-z0-9-_][a-z0-9-]{0,61}[a-z0-9]{1,61}(?<!\.)$'
+    Ip:
+        type: string
+        description: "A valid ip(ipv6) address"
+        pattern: '^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$'
+    LegacyIp:
+        type: string
+        description: "A valid legacyIp(ipv4) address"
+        pattern: '^(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$'
+    Email:
+        type: string
+        description: A valid email address
+        pattern: ^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])[.]?$
     SupportedRegistrars:
         enum: [gandi]
     AnsibleConfigType:
@@ -275,7 +286,7 @@ definitions:
 
     AnsibleConfig:
         oneOf:
-            - { $ref: "#/definitions/Hetzner" }
+            - { $ref: "#/$defs/Hetzner" }
 
     Hetzner:
         type: object
@@ -284,7 +295,7 @@ definitions:
             - configType
         properties:
             configType:
-                $ref: "#/definitions/AnsibleConfigType"
+                $ref: "#/$defs/AnsibleConfigType"
             floatingIp:
                 type: boolean
             floatingLegacyIp:
@@ -293,7 +304,7 @@ definitions:
                 type: string
                 enum: [nbg1, fsn1]
             serverType:
-                $ref: "#/definitions/HetznerServerType"
+                $ref: "#/$defs/HetznerServerType"
 
     HetznerServerType:
         type: string
