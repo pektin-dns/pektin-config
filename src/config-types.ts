@@ -29,32 +29,33 @@ export type HetznerServerType =
   | "cpx41"
   | "cx51"
   | "cpx51";
-export type SupportedRegistrars = "gandi";
 /**
  * A valid email address
  */
 export type Email = string;
 
 export interface PektinConfig {
-  ui: {
-    enabled: boolean;
-    domain: DomainName;
-    subDomain: SubDomain;
-  };
-  api: {
-    enabled: boolean;
-    domain: DomainName;
-    subDomain: SubDomain;
-  };
-  vault: {
-    enabled: boolean;
-    domain: DomainName;
-    subDomain: SubDomain;
-  };
-  recursor: {
-    enabled: boolean;
-    domain: DomainName;
-    subDomain: SubDomain;
+  services: {
+    ui: {
+      enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
+    };
+    api: {
+      enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
+    };
+    vault: {
+      enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
+    };
+    recursor: {
+      enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
+    };
   };
   nodes: [
     {
@@ -106,29 +107,9 @@ export interface PektinConfig {
       main?: boolean;
     }[]
   ];
-  registrarApi: {
-    enabled: boolean;
-    registrars?: [
-      {
-        type: SupportedRegistrars;
-        domains: [DomainName, ...DomainName[]];
-        dataPath: string;
-      },
-      ...{
-        type: SupportedRegistrars;
-        domains: [DomainName, ...DomainName[]];
-        dataPath: string;
-      }[]
-    ];
-    [k: string]: unknown;
-  };
   certificates: {
     enabled: boolean;
     letsencryptEmail: Email;
-  };
-  reverseProxy: {
-    createTraefik: boolean;
-    applyTraefikConfig: boolean;
   };
   build: {
     server: {
@@ -144,9 +125,20 @@ export interface PektinConfig {
       path: string;
     };
   };
-  devmode: {
-    enabled: boolean;
-    type: "local" | "insecure-online";
+  reverseProxy: {
+    routing: "publicIpAndPath" | "localIpAndPath" | "domain";
+    tls: boolean;
+    useLegacyIp: boolean;
+    createTraefik: boolean;
+    external: {
+      enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
+      services: {
+        gandi: boolean;
+        crt: boolean;
+      };
+    };
   };
   ansible?: {
     sshPubKeyName: string;

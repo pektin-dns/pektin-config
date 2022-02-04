@@ -1,62 +1,71 @@
 type: object
 additionalProperties: false
 properties:
-    ui:
+    services:
         type: object
         additionalProperties: false
-        properties:
-            enabled:
-                type: boolean
-            domain:
-                $ref: "#/$defs/DomainName"
-            subDomain:
-                $ref: "#/$defs/SubDomain"
         required:
-            - enabled
-            - subDomain
-            - domain
-    api:
-        type: object
-        additionalProperties: false
+            - ui
+            - api
+            - vault
+            - recursor
         properties:
-            enabled:
-                type: boolean
-            domain:
-                $ref: "#/$defs/DomainName"
-            subDomain:
-                $ref: "#/$defs/SubDomain"
-        required:
-            - enabled
-            - subDomain
-            - domain
-    vault:
-        type: object
-        additionalProperties: false
-        properties:
-            enabled:
-                type: boolean
-            domain:
-                $ref: "#/$defs/DomainName"
-            subDomain:
-                $ref: "#/$defs/SubDomain"
-        required:
-            - enabled
-            - subDomain
-            - domain
-    recursor:
-        type: object
-        additionalProperties: false
-        properties:
-            enabled:
-                type: boolean
-            domain:
-                $ref: "#/$defs/DomainName"
-            subDomain:
-                $ref: "#/$defs/SubDomain"
-        required:
-            - enabled
-            - subDomain
-            - domain
+            ui:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
+                required:
+                    - enabled
+                    - subDomain
+                    - domain
+            api:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
+                required:
+                    - enabled
+                    - subDomain
+                    - domain
+            vault:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
+                required:
+                    - enabled
+                    - subDomain
+                    - domain
+            recursor:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
+                required:
+                    - enabled
+                    - subDomain
+                    - domain
     nodes:
         type: array
         minItems: 1
@@ -132,34 +141,6 @@ properties:
                     type: string
                 main:
                     type: boolean
-
-    registrarApi:
-        type: object
-        required:
-            - enabled
-        properties:
-            enabled:
-                type: boolean
-            registrars:
-                type: array
-                minItems: 1
-                items:
-                    type: object
-                    additionalProperties: false
-                    required:
-                        - type
-                        - domains
-                        - dataPath
-                    properties:
-                        type:
-                            $ref: "#/$defs/SupportedRegistrars"
-                        domains:
-                            type: array
-                            minItems: 1
-                            items:
-                                $ref: "#/$defs/DomainName"
-                        dataPath:
-                            type: string
     certificates:
         type: object
         additionalProperties: false
@@ -171,17 +152,7 @@ properties:
         required:
             - enabled
             - letsencryptEmail
-    reverseProxy:
-        type: object
-        additionalProperties: false
-        properties:
-            createTraefik:
-                type: boolean
-            applyTraefikConfig:
-                type: boolean
-        required:
-            - createTraefik
-            - applyTraefikConfig
+
     build:
         type: object
         additionalProperties: false
@@ -224,17 +195,50 @@ properties:
                     - enabled
                     - path
 
-    devmode:
+    reverseProxy:
         type: object
         additionalProperties: false
         required:
-            - enabled
-            - type
+            - routing
+            - tls
+            - useLegacyIp
+            - createTraefik
+            - external
         properties:
-            enabled:
+            routing:
+                enum: [publicIpAndPath, localIpAndPath, domain]
+            tls:
                 type: boolean
-            type:
-                enum: [local, insecure-online]
+            useLegacyIp:
+                type: boolean
+            createTraefik:
+                type: boolean
+            external:
+                type: object
+                additionalProperties: false
+                required:
+                    - enabled
+                    - subDomain
+                    - domain
+                    - services
+                properties:
+                    enabled:
+                        type: boolean
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
+                    services:
+                        type: object
+                        additionalProperties: false
+                        required:
+                            - gandi
+                            - crt
+                        properties:
+                            gandi:
+                                type: boolean
+                            crt:
+                                type: boolean
 
     ansible:
         type: object
@@ -245,17 +249,13 @@ properties:
             sshPubKeyName:
                 type: string
 required:
-    - ui
-    - api
-    - vault
-    - recursor
+    - services
     - nodes
-    - registrarApi
+    - nameservers
     - certificates
     - reverseProxy
     - build
-    - devmode
-    - nameservers
+    - proxy
 
 $defs:
     DomainName:

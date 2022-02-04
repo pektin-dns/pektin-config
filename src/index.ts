@@ -22,8 +22,8 @@ export const checkConfig = async (
     if (!valid) throw validate.errors;
 
     // domain must be valid if service is enabled
-    [config.ui, config.api, config.vault, config.recursor].forEach((e, i) => {
-        const s = [`ui`, `api`, `vault`, `recursor`];
+    Object.values(config.services).forEach((e, i) => {
+        const s = Object.keys(config.services);
         if (e.enabled && e.domain.length < 4) err(`${s[i]} is enabled but it's domain is invalid`);
     });
 
