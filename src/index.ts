@@ -116,6 +116,10 @@ export const checkConfig = async (
     if (config.certificates.enabled && config.certificates.letsencryptEmail.length < 6) {
         err(`certificates is enabled but the letsencryptEmail is invalid`);
     }
+    // check if api and vault are enabled
+    if (!config.services.api.enabled || !config.services.vault.enabled) {
+        err(`API and Vault cannot be disabled.`);
+    }
 
     // TODO check if all domains are absolute
 
