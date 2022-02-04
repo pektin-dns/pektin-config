@@ -255,7 +255,6 @@ required:
     - certificates
     - reverseProxy
     - build
-    - proxy
 
 $defs:
     DomainName:
