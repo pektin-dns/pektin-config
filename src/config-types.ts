@@ -126,7 +126,7 @@ export interface PektinConfig {
     };
   };
   reverseProxy: {
-    routing: "publicIpAndPath" | "localIpAndPath" | "domain";
+    routing: "localDomain" | "domain";
     tls: boolean;
     useLegacyIp: boolean;
     createTraefik: boolean;

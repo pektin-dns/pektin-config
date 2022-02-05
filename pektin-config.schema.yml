@@ -206,7 +206,7 @@ properties:
             - external
         properties:
             routing:
-                enum: [publicIpAndPath, localIpAndPath, domain]
+                enum: [localDomain, domain]
             tls:
                 type: boolean
             useLegacyIp:
