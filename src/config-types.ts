@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 
 /**
- * A valid UTF8 absolute domain name ending with a dot
+ * A valid UTF8 domain name
  */
 export type DomainName = string;
 /**
