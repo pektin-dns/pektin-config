@@ -259,8 +259,8 @@ required:
 $defs:
     DomainName:
         type: string
-        description: "A valid UTF8 absolute domain name ending with a dot"
-        pattern: '^(?:[a-z0-9_](?:[a-z0-9-_]{0,61}[a-z0-9_]|[-]{2,}?)?\.)*[a-z0-9-_][a-z0-9-]{0,61}[a-z0-9]{1,61}\.$'
+        description: "A valid UTF8 domain name"
+        pattern: '^(?:[a-z0-9_](?:[a-z0-9-_]{0,61}[a-z0-9_]|[-]{2,}?)?\.)*[a-z0-9-_][a-z0-9-]{0,61}[a-z0-9]{1,61}$'
     SubDomain:
         type: string
         description: "A valid UTF8 domain name not ending with a dot"
