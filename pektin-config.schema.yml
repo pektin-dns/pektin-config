@@ -204,6 +204,7 @@ properties:
             - useLegacyIp
             - createTraefik
             - external
+            - tempPektinZone
         properties:
             routing:
                 enum: [local, domain]
