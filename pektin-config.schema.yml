@@ -201,7 +201,6 @@ properties:
         required:
             - routing
             - tls
-            - useLegacyIp
             - createTraefik
             - external
             - tempPektinZone
@@ -213,8 +212,7 @@ properties:
                 type: boolean
             tls:
                 type: boolean
-            useLegacyIp:
-                type: boolean
+
             createTraefik:
                 type: boolean
             external:
