@@ -132,7 +132,6 @@ export interface PektinConfig {
      */
     tempPektinZone: boolean;
     tls: boolean;
-    useLegacyIp: boolean;
     createTraefik: boolean;
     external: {
       enabled: boolean;
