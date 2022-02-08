@@ -133,6 +133,10 @@ export interface PektinConfig {
     tempPektinZone: boolean;
     tls: boolean;
     createTraefik: boolean;
+    traefikUi: boolean;
+    /**
+     * Proxy to external APIs that aren't configured to use CORS.
+     */
     external: {
       enabled: boolean;
       domain: DomainName;

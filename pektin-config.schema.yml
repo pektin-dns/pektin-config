@@ -204,6 +204,7 @@ properties:
             - createTraefik
             - external
             - tempPektinZone
+            - traefikUi
         properties:
             routing:
                 enum: [local, domain]
@@ -212,10 +213,12 @@ properties:
                 type: boolean
             tls:
                 type: boolean
-
             createTraefik:
                 type: boolean
+            traefikUi:
+                type: boolean
             external:
+                description: Proxy to external APIs that aren't configured to use CORS.
                 type: object
                 additionalProperties: false
                 required:
