@@ -24,7 +24,9 @@ export const checkConfig = async (
     // domain must be valid if service is enabled
     Object.values(config.services).forEach((e, i) => {
         const s = Object.keys(config.services);
-        if (e.enabled && e.domain.length < 4) err(`${s[i]} is enabled but it's domain is invalid`);
+        /*@ts-ignore*/
+        if (e.enabled !== false && e.domain && e.domain.length < 4)
+            err(`${s[i]} is enabled but it's domain is invalid`);
     });
 
     // nodes must contain exactly one main node
@@ -116,12 +118,6 @@ export const checkConfig = async (
     if (config.certificates.enabled && config.certificates.letsencryptEmail.length < 6) {
         err(`certificates is enabled but the letsencryptEmail is invalid`);
     }
-    // check if api and vault are enabled
-    if (!config.services.api.enabled || !config.services.vault.enabled) {
-        err(`API and Vault cannot be disabled.`);
-    }
-
-    // TODO check if all domains are absolute
 
     console.log(`${colors.bold}${colors.fg.green}Config is valid${colors.reset}`);
 };
