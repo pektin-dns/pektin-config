@@ -233,7 +233,7 @@ properties:
                 additionalProperties: false
                 required:
                     - enabled
-                    - domain
+                    - provider
                 properties:
                     enabled:
                         type: boolean

@@ -139,7 +139,7 @@ export interface PektinConfig {
       /**
        * Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
        */
-      provider?: string;
+      provider: string;
     };
     tls: boolean;
     createTraefik: boolean;
