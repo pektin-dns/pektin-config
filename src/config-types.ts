@@ -56,6 +56,9 @@ export interface PektinConfig {
       domain: DomainName;
       subDomain: SubDomain;
     };
+    ribston: {
+      enabled: boolean;
+    };
   };
   nodes: [
     {
@@ -124,13 +127,20 @@ export interface PektinConfig {
       enabled: boolean;
       path: string;
     };
+    ribston?: {
+      enabled: boolean;
+      path: string;
+    };
   };
   reverseProxy: {
     routing: "local" | "domain";
-    /**
-     * Get a temporary pektin zone subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. Setting this to true implies your acceptance of our privacy policy.
-     */
-    tempPektinZone: boolean;
+    tempZone: {
+      enabled: boolean;
+      /**
+       * Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
+       */
+      provider?: string;
+    };
     tls: boolean;
     createTraefik: boolean;
     traefikUi: boolean;

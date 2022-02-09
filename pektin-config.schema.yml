@@ -9,6 +9,7 @@ properties:
             - api
             - vault
             - recursor
+            - ribston
         properties:
             ui:
                 type: object
@@ -66,6 +67,14 @@ properties:
                     - enabled
                     - subDomain
                     - domain
+            ribston:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                required:
+                    - enabled
     nodes:
         type: array
         minItems: 1
@@ -194,6 +203,17 @@ properties:
                 required:
                     - enabled
                     - path
+            ribston:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                    path:
+                        type: string
+                required:
+                    - enabled
+                    - path
 
     reverseProxy:
         type: object
@@ -203,14 +223,24 @@ properties:
             - tls
             - createTraefik
             - external
-            - tempPektinZone
+            - tempZone
             - traefikUi
         properties:
             routing:
                 enum: [local, domain]
-            tempPektinZone:
-                description: Get a temporary pektin zone subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. Setting this to true implies your acceptance of our privacy policy.
-                type: boolean
+            tempZone:
+                type: object
+                additionalProperties: false
+                required:
+                    - enabled
+                    - domain
+                properties:
+                    enabled:
+                        type: boolean
+                    provider:
+                        type: string
+                        description: Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
+
             tls:
                 type: boolean
             createTraefik:
