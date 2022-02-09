@@ -10,6 +10,7 @@ properties:
             - vault
             - recursor
             - ribston
+            - opa
         properties:
             ui:
                 type: object
@@ -29,28 +30,22 @@ properties:
                 type: object
                 additionalProperties: false
                 properties:
-                    enabled:
-                        type: boolean
                     domain:
                         $ref: "#/$defs/DomainName"
                     subDomain:
                         $ref: "#/$defs/SubDomain"
                 required:
-                    - enabled
                     - subDomain
                     - domain
             vault:
                 type: object
                 additionalProperties: false
                 properties:
-                    enabled:
-                        type: boolean
                     domain:
                         $ref: "#/$defs/DomainName"
                     subDomain:
                         $ref: "#/$defs/SubDomain"
                 required:
-                    - enabled
                     - subDomain
                     - domain
             recursor:
@@ -75,6 +70,17 @@ properties:
                         type: boolean
                 required:
                     - enabled
+            opa:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                required:
+                    - enabled
+    usePolicies:
+        type: string
+        enum: [ribston, opa, both, false]
     nodes:
         type: array
         minItems: 1
@@ -169,6 +175,8 @@ properties:
             - server
             - api
             - ui
+            - ribston
+            - recursor
         properties:
             server:
                 type: object
@@ -204,6 +212,17 @@ properties:
                     - enabled
                     - path
             ribston:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                    path:
+                        type: string
+                required:
+                    - enabled
+                    - path
+            recursor:
                 type: object
                 additionalProperties: false
                 properties:
@@ -294,6 +313,7 @@ required:
     - certificates
     - reverseProxy
     - build
+    - usePolicies
 
 $defs:
     DomainName:

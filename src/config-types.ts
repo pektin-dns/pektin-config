@@ -42,12 +42,10 @@ export interface PektinConfig {
       subDomain: SubDomain;
     };
     api: {
-      enabled: boolean;
       domain: DomainName;
       subDomain: SubDomain;
     };
     vault: {
-      enabled: boolean;
       domain: DomainName;
       subDomain: SubDomain;
     };
@@ -59,7 +57,11 @@ export interface PektinConfig {
     ribston: {
       enabled: boolean;
     };
+    opa: {
+      enabled: boolean;
+    };
   };
+  usePolicies: "ribston" | "opa" | "both" | false;
   nodes: [
     {
       main?: boolean;
@@ -127,7 +129,11 @@ export interface PektinConfig {
       enabled: boolean;
       path: string;
     };
-    ribston?: {
+    ribston: {
+      enabled: boolean;
+      path: string;
+    };
+    recursor: {
       enabled: boolean;
       path: string;
     };
