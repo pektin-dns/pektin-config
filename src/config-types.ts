@@ -137,6 +137,10 @@ export interface PektinConfig {
       enabled: boolean;
       path: string;
     };
+    vault: {
+      enabled: boolean;
+      path: string;
+    };
   };
   reverseProxy: {
     routing: "local" | "domain";

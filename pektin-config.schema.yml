@@ -177,6 +177,7 @@ properties:
             - ui
             - ribston
             - recursor
+            - vault
         properties:
             server:
                 type: object
@@ -223,6 +224,17 @@ properties:
                     - enabled
                     - path
             recursor:
+                type: object
+                additionalProperties: false
+                properties:
+                    enabled:
+                        type: boolean
+                    path:
+                        type: string
+                required:
+                    - enabled
+                    - path
+            vault:
                 type: object
                 additionalProperties: false
                 properties:
