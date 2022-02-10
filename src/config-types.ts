@@ -130,7 +130,7 @@ export interface PektinConfig {
       main?: boolean;
     }[]
   ];
-  certificates: {
+  letsencrypt: {
     enabled: boolean;
     /**
      * A valid email address

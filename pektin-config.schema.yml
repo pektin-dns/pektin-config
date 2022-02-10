@@ -354,7 +354,7 @@ properties:
                               use:
                                   - place: [api, dns, soa, mname]
                                     comments: update mname in SOA record
-    certificates:
+    letsencrypt:
         type: object
         additionalProperties: false
         required:
@@ -673,7 +673,7 @@ required:
     - services
     - nodes
     - nameservers
-    - certificates
+    - letsencrypt
     - reverseProxy
     - build
     - usePolicies

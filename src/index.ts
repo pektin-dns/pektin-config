@@ -5,11 +5,7 @@ import { PektinConfig } from "./config-types.js";
 import _ from "lodash";
 import { colors } from "@pektin/client/dist/js/utils/colors.js";
 
-export const checkConfig = async (
-    inputPath: string,
-    schemaPath: string,
-    mode: `yaml` | `json` = `json`
-) => {
+export const checkConfig = async (inputPath: string, schemaPath: string, mode: `yaml` | `json` = `json`) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: `utf-8` }));
     /*@ts-ignore*/
     const ajv = new Ajv({ strictTuples: false });
@@ -25,8 +21,7 @@ export const checkConfig = async (
     Object.values(config.services).forEach((e, i) => {
         const s = Object.keys(config.services);
         /*@ts-ignore*/
-        if (e.enabled !== false && e.domain && e.domain.length < 4)
-            err(`${s[i]} is enabled but it's domain is invalid`);
+        if (e.enabled !== false && e.domain && e.domain.length < 4) err(`${s[i]} is enabled but it's domain is invalid`);
     });
 
     // nodes must contain exactly one main node
@@ -35,27 +30,18 @@ export const checkConfig = async (
     }
 
     // nodes that are main cant contain a setup object
-    if (
-        config.nodes.filter((node) => node.main === true && typeof node.setup !== `undefined`)
-            .length !== 0
-    ) {
+    if (config.nodes.filter((node) => node.main === true && typeof node.setup !== `undefined`).length !== 0) {
         err(`the main node can't contain a setup object`);
     }
 
     // nodes must have a minium of one ip or one legacyIp
-    if (
-        config.nodes.filter((node) => !node.ansible && !node.ips?.length && !node.legacyIps?.length)
-            .length !== 0
-    ) {
+    if (config.nodes.filter((node) => !node.ansible && !node.ips?.length && !node.legacyIps?.length).length !== 0) {
         err(`nodes must have a minimum of one ip or one legacyIp or ansible configured`);
     }
 
     {
         // check if there are duplicate nodes
-        if (
-            Array.from(new Set(config.nodes.map((node) => node.name))).length !==
-            config.nodes.length
-        ) {
+        if (Array.from(new Set(config.nodes.map((node) => node.name))).length !== config.nodes.length) {
             err(`Nodes must have distinct names`);
         }
     }
@@ -96,10 +82,7 @@ export const checkConfig = async (
         }
         {
             // check if there are duplicate nameservers
-            if (
-                Array.from(new Set(config.nameservers.map((ns) => ns.subDomain + `.` + ns.domain)))
-                    .length !== config.nameservers.length
-            ) {
+            if (Array.from(new Set(config.nameservers.map((ns) => ns.subDomain + `.` + ns.domain))).length !== config.nameservers.length) {
                 err(`Nameservers cant have duplicates`);
             }
         }
@@ -115,7 +98,7 @@ export const checkConfig = async (
     }
 
     // if certificates are enabled the letsencrypt email must be set
-    if (config.certificates.enabled && config.certificates.letsencryptEmail.length < 6) {
+    if (config.letsencrypt.enabled && config.letsencrypt.letsencryptEmail.length < 6) {
         err(`certificates is enabled but the letsencryptEmail is invalid`);
     }
 
