@@ -197,9 +197,6 @@ export interface PektinConfig {
   ansible?: {
     sshPubKeyName: string;
   };
-  generated?: {
-    [k: string]: unknown;
-  };
 }
 export interface Hetzner {
   configType: AnsibleConfigType;

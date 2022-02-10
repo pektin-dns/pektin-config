@@ -19,7 +19,7 @@ import { schemaHasAllMeta } from "./utils/index.js";
     ajv.compile(_.cloneDeep(json));
 
     // check if pektin config schema has meta info for all keys
-    schemaHasAllMeta(json, validate);
+    schemaHasAllMeta({ schema: json, validateMeta: validate });
 
     const ts = await compile(_.cloneDeep(json), `PektinConfig`, {
         bannerComment: `/* eslint-disable quotes */`,

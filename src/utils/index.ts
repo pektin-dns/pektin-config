@@ -1,19 +1,30 @@
 import { ValidateFunction } from "ajv";
+import _ from "lodash";
 
-export const schemaHasAllMeta = (a: Record<string, any>, validateMeta: ValidateFunction, propChain: string[] = []) => {
-    console.log(a);
+export const schemaHasAllMeta = ({
+    schema,
+    validateMeta,
+    propChain = [],
+    metas,
+}: {
+    schema: Record<string, any>;
+    validateMeta?: ValidateFunction;
+    propChain?: string[];
+    metas?: any[];
+}) => {
+    console.log(schema);
 
-    if (a.properties === undefined) return propChain;
-    const tlValues: Record<string, any>[] = Object.values(a.properties);
-    const tlKeys = Object.keys(a.properties);
+    if (schema.properties === undefined) return propChain;
+    const tlValues: Record<string, any>[] = Object.values(schema.properties);
+    const tlKeys = Object.keys(schema.properties);
 
     tlValues.forEach((val, i) => {
         if (val.type === `object`) {
             propChain.push(tlKeys[i]);
-            propChain = schemaHasAllMeta(val, validateMeta, propChain);
+            propChain = schemaHasAllMeta({ schema: val, validateMeta, propChain, metas });
         } else if (val.type === `array` && val.items.properties) {
             propChain.push(tlKeys[i]);
-            propChain = schemaHasAllMeta(val.items, validateMeta, propChain);
+            propChain = schemaHasAllMeta({ schema: val.items, validateMeta, propChain, metas });
         } else {
             if (val.type === `array`) val = val.items;
 
@@ -26,14 +37,16 @@ export const schemaHasAllMeta = (a: Record<string, any>, validateMeta: ValidateF
                 propChain.push(tlKeys[i]);
                 throw Error(`Missing meta for ${propChainDots(propChain)}`);
             }
-
-            const v = validateMeta(m);
-            if (!v) {
-                propChain.push(tlKeys[i]);
-                propChain.push(`examples`);
-                propChain.push(`meta`);
-                throw Error(`${propChainDots(propChain)} ${JSON.stringify(validateMeta.errors, null, `    `)}`);
+            if (validateMeta) {
+                const v = validateMeta(m);
+                if (!v) {
+                    propChain.push(tlKeys[i]);
+                    propChain.push(`examples`);
+                    propChain.push(`meta`);
+                    throw Error(`${propChainDots(propChain)} ${JSON.stringify(validateMeta.errors, null, `    `)}`);
+                }
             }
+            metas?.push({ propChain: Array.from([...propChain, tlKeys[i]]), meta: m });
         }
     });
     propChain.pop();

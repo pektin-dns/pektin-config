@@ -29,11 +29,11 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: add/remove in routing settings
                                       - place: [compose, compose-scripts]
                                         comments: add/remove file in compose command
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: add/remove AAAA and A records for this service
                     domain:
                         $ref: "#/$defs/DomainName"
@@ -41,11 +41,11 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
                                       - place: [api, dns, services, SOA-records NS-records]
                                         comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
 
                     subDomain:
@@ -54,9 +54,9 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
 
             api:
@@ -72,11 +72,11 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
                                       - place: [api, dns, services, SOA-records NS-records]
                                         comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
 
                     subDomain:
@@ -85,9 +85,9 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
 
             vault:
@@ -103,11 +103,11 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
                                       - place: [api, dns, services, SOA-records NS-records]
                                         comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
                     subDomain:
                         $ref: "#/$defs/SubDomain"
@@ -115,9 +115,9 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
 
             recursor:
@@ -134,11 +134,11 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: add/remove in routing settings
                                       - place: [compose, compose-scripts]
                                         comments: add/remove file in compose command
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: add/remove AAAA and A records for this service
                     domain:
                         $ref: "#/$defs/DomainName"
@@ -146,11 +146,11 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
                                       - place: [api, dns, services, SOA-records NS-records]
                                         comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
                     subDomain:
                         $ref: "#/$defs/SubDomain"
@@ -158,9 +158,9 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records A-records]
+                                      - place: [api, dns, services, AAAA-records-A-records]
                                         comments: update name in AAAA and A records
 
             ribston:
@@ -247,10 +247,8 @@ properties:
                     type: string
                     examples:
                         - meta:
-                              updatable: true
-                              use:
-                                  - place: [none]
-                                    comments: this is only used to have a common key between nodes and nameservers
+                              updatable: false
+
                 ansible:
                     $ref: "#/$defs/AnsibleConfig"
                     examples:
@@ -326,7 +324,7 @@ properties:
                                     comments: update value in NS record
                                   - place: [api, dns, soa, mname]
                                     comments: update mname in SOA record if main NS
-                                  - place: [compose, secrets, traefik, dynamic config]
+                                  - place: [compose, secrets, traefik, dynamic-config]
                                     comments: update name in routing config tls sni and http router
                 domain:
                     $ref: "#/$defs/DomainName"
@@ -338,16 +336,16 @@ properties:
                                     comments: update value in NS record
                                   - place: [api, dns, soa, mname]
                                     comments: update mname in SOA record if main NS
-                                  - place: [compose, secrets, traefik, dynamic config]
+                                  - place: [compose, secrets, traefik, dynamic-config]
                                     comments: update name in routing config tls sni and http router
+                                  - place: [vault, signer]
+                                    comments: update signer for new domain
                 node:
                     type: string
                     examples:
                         - meta:
-                              updatable: true
-                              use:
-                                  - place: [none]
-                                    comments: this is only used to have a common key between nodes and nameservers
+                              updatable: false
+
                 main:
                     type: boolean
                     examples:
@@ -369,7 +367,7 @@ properties:
                     - meta:
                           updatable: true
                           use:
-                              - place: [compose, secrets, traefik, static config, certificate resolvers]
+                              - place: [compose, secrets, traefik, static-config, certificate-resolvers]
                                 comments: create cert resolvers in routing config
             letsencryptEmail:
                 $ref: "#/$defs/Email"
@@ -377,7 +375,7 @@ properties:
                     - meta:
                           updatable: true
                           use:
-                              - place: [compose, secrets, traefik, static config, certificate resolvers]
+                              - place: [compose, secrets, traefik, static-config, certificate-resolvers]
                                 comments: update email in the routing config if enabled
 
     build:
@@ -551,7 +549,7 @@ properties:
                     - meta:
                           updatable: true
                           use:
-                              - place: [compose, secrets, traefik, dynamic config]
+                              - place: [compose, secrets, traefik, dynamic-config]
                                 comments: update routing
             tempZone:
                 type: object
@@ -566,7 +564,7 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
                     provider:
                         type: string
@@ -575,7 +573,7 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
 
             tls:
@@ -584,7 +582,7 @@ properties:
                     - meta:
                           updatable: true
                           use:
-                              - place: [compose, secrets, traefik, dynamic config]
+                              - place: [compose, secrets, traefik, dynamic-config]
                                 comments: update routing
             createTraefik:
                 type: boolean
@@ -600,7 +598,7 @@ properties:
                     - meta:
                           updatable: true
                           use:
-                              - place: [compose, secrets, traefik, dynamic config]
+                              - place: [compose, secrets, traefik, dynamic-config]
                                 comments: update routing
             external:
                 description: Proxy to external APIs that aren't configured to use CORS.
@@ -618,7 +616,7 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
                     domain:
                         $ref: "#/$defs/DomainName"
@@ -626,7 +624,7 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
                     subDomain:
                         $ref: "#/$defs/SubDomain"
@@ -634,7 +632,7 @@ properties:
                             - meta:
                                   updatable: true
                                   use:
-                                      - place: [compose, secrets, traefik, dynamic config]
+                                      - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
                     services:
                         type: object
@@ -649,7 +647,7 @@ properties:
                                     - meta:
                                           updatable: true
                                           use:
-                                              - place: [compose, secrets, traefik, dynamic config]
+                                              - place: [compose, secrets, traefik, dynamic-config]
                                                 comments: update routing
                             crt:
                                 type: boolean
@@ -657,7 +655,7 @@ properties:
                                     - meta:
                                           updatable: true
                                           use:
-                                              - place: [compose, secrets, traefik, dynamic config]
+                                              - place: [compose, secrets, traefik, dynamic-config]
                                                 comments: update routing
 
     ansible:
@@ -671,10 +669,6 @@ properties:
                 examples:
                     - meta:
                           updatable: false
-    generated:
-        type: object
-        additionalProperties: true
-
 required:
     - services
     - nodes
