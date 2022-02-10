@@ -1,22 +1,5 @@
 /* eslint-disable quotes */
 
-/**
- * A valid UTF8 domain name
- */
-export type DomainName = string;
-/**
- * A valid UTF8 domain name not ending with a dot
- */
-export type SubDomain = string;
-/**
- * A valid ip(ipv6) address
- */
-export type Ip = string;
-/**
- * A valid legacyIp(ipv4) address
- */
-export type LegacyIp = string;
-export type AnsibleConfig = Hetzner;
 export type AnsibleConfigType = "hetzner";
 export type HetznerServerType =
   | "cx11"
@@ -29,30 +12,53 @@ export type HetznerServerType =
   | "cpx41"
   | "cx51"
   | "cpx51";
-/**
- * A valid email address
- */
-export type Email = string;
 
+/**
+ * The configuration for the Pektin DNS server
+ */
 export interface PektinConfig {
   services: {
     ui: {
       enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
+      /**
+       * A valid UTF8 domain name
+       */
+      domain: string;
+      /**
+       * A valid UTF8 domain name not ending with a dot
+       */
+      subDomain: string;
     };
     api: {
-      domain: DomainName;
-      subDomain: SubDomain;
+      /**
+       * A valid UTF8 domain name
+       */
+      domain: string;
+      /**
+       * A valid UTF8 domain name not ending with a dot
+       */
+      subDomain: string;
     };
     vault: {
-      domain: DomainName;
-      subDomain: SubDomain;
+      /**
+       * A valid UTF8 domain name
+       */
+      domain: string;
+      /**
+       * A valid UTF8 domain name not ending with a dot
+       */
+      subDomain: string;
     };
     recursor: {
       enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
+      /**
+       * A valid UTF8 domain name
+       */
+      domain: string;
+      /**
+       * A valid UTF8 domain name not ending with a dot
+       */
+      subDomain: string;
     };
     ribston: {
       enabled: boolean;
@@ -65,10 +71,10 @@ export interface PektinConfig {
   nodes: [
     {
       main?: boolean;
-      ips?: [Ip, ...Ip[]];
-      legacyIps?: [LegacyIp, ...LegacyIp[]];
+      ips?: [string, ...string[]];
+      legacyIps?: [string, ...string[]];
       name: string;
-      ansible?: AnsibleConfig;
+      ansible?: Hetzner;
       setup?: {
         system: string;
         root: {
@@ -82,10 +88,10 @@ export interface PektinConfig {
     },
     ...{
       main?: boolean;
-      ips?: [Ip, ...Ip[]];
-      legacyIps?: [LegacyIp, ...LegacyIp[]];
+      ips?: [string, ...string[]];
+      legacyIps?: [string, ...string[]];
       name: string;
-      ansible?: AnsibleConfig;
+      ansible?: Hetzner;
       setup?: {
         system: string;
         root: {
@@ -100,21 +106,36 @@ export interface PektinConfig {
   ];
   nameservers: [
     {
-      subDomain?: SubDomain;
-      domain: DomainName;
+      /**
+       * A valid UTF8 domain name not ending with a dot
+       */
+      subDomain?: string;
+      /**
+       * A valid UTF8 domain name
+       */
+      domain: string;
       node: string;
       main?: boolean;
     },
     ...{
-      subDomain?: SubDomain;
-      domain: DomainName;
+      /**
+       * A valid UTF8 domain name not ending with a dot
+       */
+      subDomain?: string;
+      /**
+       * A valid UTF8 domain name
+       */
+      domain: string;
       node: string;
       main?: boolean;
     }[]
   ];
   certificates: {
     enabled: boolean;
-    letsencryptEmail: Email;
+    /**
+     * A valid email address
+     */
+    letsencryptEmail: string;
   };
   build: {
     server: {
@@ -159,8 +180,14 @@ export interface PektinConfig {
      */
     external: {
       enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
+      /**
+       * A valid UTF8 domain name
+       */
+      domain: string;
+      /**
+       * A valid UTF8 domain name not ending with a dot
+       */
+      subDomain: string;
       services: {
         gandi: boolean;
         crt: boolean;
@@ -170,7 +197,9 @@ export interface PektinConfig {
   ansible?: {
     sshPubKeyName: string;
   };
-  generated?: {};
+  generated?: {
+    [k: string]: unknown;
+  };
 }
 export interface Hetzner {
   configType: AnsibleConfigType;
