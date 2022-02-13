@@ -4,10 +4,10 @@ import { promises as fs } from "fs";
 import { PektinConfig } from "./config-types.js";
 import _ from "lodash";
 /*@ts-ignore*/
-import CFonts from "cfonts";
+import cfonts from "cfonts";
 import c from "chalk";
 
-export const checkConfig = async (inputPath: string, schemaPath: string, mode: `yaml` | `json` = `json`) => {
+export const checkConfig = async (inputPath: string, schemaPath: string, mode: `yaml` | `json` = `json`, silentOnSuccess = true) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: `utf-8` }));
     /*@ts-ignore*/
     const ajv = new Ajv({ strictTuples: false });
@@ -109,21 +109,18 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
     if (config.letsencrypt.enabled && config.letsencrypt.letsencryptEmail.length < 6) {
         err(`letsencrypt is enabled but the letsencryptEmail is invalid`);
     }
-
-    CFonts.say(`Config valid!`, {
-        font: `chrome`,
-        align: `center`,
-        background: `black`,
-        gradient: [`yellow`, `#5f5`],
-    });
+    if (!silentOnSuccess) {
+        cfonts.say(`Config valid!`, {
+            font: `chrome`,
+            gradient: [`yellow`, `#5f5`],
+            level: 3,
+        });
+    }
 };
 
 const err = (message: string | undefined) => {
-    CFonts.say(`Invalid Config!`, {
+    cfonts.say(`Invalid Config!`, {
         font: `chrome`,
-        align: `center`,
-        background: `black`,
-        maxLength: `0`,
         gradient: [`red`, `#ff5500`],
         transitionGradient: true,
     });
