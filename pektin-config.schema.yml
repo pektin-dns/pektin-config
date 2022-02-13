@@ -557,6 +557,7 @@ properties:
                 required:
                     - enabled
                     - provider
+                    - routing
                 properties:
                     enabled:
                         type: boolean
@@ -576,7 +577,7 @@ properties:
                                       - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
                     routing:
-                        enum: [docker, public]
+                        enum: [local, public]
                         examples:
                             - meta:
                                   updatable: true
