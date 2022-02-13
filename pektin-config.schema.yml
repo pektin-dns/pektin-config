@@ -575,6 +575,14 @@ properties:
                                   use:
                                       - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
+                    routing:
+                        enum: [docker, public]
+                        examples:
+                            - meta:
+                                  updatable: true
+                                  use:
+                                      - place: [requestPektinDomain]
+                                        comments: function
 
             tls:
                 type: boolean

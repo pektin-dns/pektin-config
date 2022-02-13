@@ -37,7 +37,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
         err(`nodes must contain exactly one main node`);
     }
 
-    // nodes that are main cant contain a setup object
+    // nodes that are main can't contain a setup object
     if (config.nodes.filter((node) => node.main === true && typeof node.setup !== `undefined`).length !== 0) {
         err(`The main node can't contain a setup object`);
     }
