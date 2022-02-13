@@ -3,7 +3,9 @@ import yaml from "yaml";
 import { promises as fs } from "fs";
 import { PektinConfig } from "./config-types.js";
 import _ from "lodash";
-import { colors } from "@pektin/client/dist/js/utils/colors.js";
+/*@ts-ignore*/
+import CFonts from "cfonts";
+import c from "chalk";
 
 export const checkConfig = async (inputPath: string, schemaPath: string, mode: `yaml` | `json` = `json`) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: `utf-8` }));
@@ -12,10 +14,16 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
 
     const validate = ajv.compile(schema);
     const input = await fs.readFile(inputPath, { encoding: `utf-8` });
-    const config: PektinConfig = mode === `yaml` ? yaml.parse(input) : JSON.parse(input);
+    let config: PektinConfig = {} as PektinConfig;
+    try {
+        config = mode === `yaml` ? yaml.parse(input) : JSON.parse(input);
+    } catch (error) {
+        /*@ts-ignore*/
+        err(error.message);
+    }
     const valid = validate(config);
 
-    if (!valid) throw validate.errors;
+    if (!valid) err(validate?.errors?.[0].message);
 
     // domain must be valid if service is enabled
     Object.values(config.services).forEach((e, i) => {
@@ -31,7 +39,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
 
     // nodes that are main cant contain a setup object
     if (config.nodes.filter((node) => node.main === true && typeof node.setup !== `undefined`).length !== 0) {
-        err(`the main node can't contain a setup object`);
+        err(`The main node can't contain a setup object`);
     }
 
     // nodes must have a minium of one ip or one legacyIp
@@ -42,7 +50,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
     {
         // check if there are duplicate nodes
         if (Array.from(new Set(config.nodes.map((node) => node.name))).length !== config.nodes.length) {
-            err(`Nodes must have distinct names`);
+            err(`nodes must have distinct names`);
         }
     }
 
@@ -83,7 +91,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
         {
             // check if there are duplicate nameservers
             if (Array.from(new Set(config.nameservers.map((ns) => ns.subDomain + `.` + ns.domain))).length !== config.nameservers.length) {
-                err(`Nameservers cant have duplicates`);
+                err(`Nameservers can't have duplicates`);
             }
         }
         {
@@ -92,19 +100,35 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
             const nodes = new Set(config.nodes.map((node) => node.name));
             const distinctNsNodes = new Set(config.nameservers.map((ns) => ns.node));
             if (!_.isEqual(nodes, distinctNsNodes)) {
-                err(`Nameservers nodes dont overlap with nodes`);
+                err(`Nameservers nodes don't overlap with nodes`);
             }
         }
     }
 
     // if certificates are enabled the letsencrypt email must be set
     if (config.letsencrypt.enabled && config.letsencrypt.letsencryptEmail.length < 6) {
-        err(`certificates is enabled but the letsencryptEmail is invalid`);
+        err(`letsencrypt is enabled but the letsencryptEmail is invalid`);
     }
 
-    console.log(`${colors.bold}${colors.fg.green}Config is valid${colors.reset}`);
+    CFonts.say(`Config valid!`, {
+        font: `chrome`,
+        align: `center`,
+        background: `black`,
+        gradient: [`yellow`, `#5f5`],
+    });
 };
 
-const err = (message: string) => {
-    throw Error(`${colors.boldRed}${message}${colors.reset}`);
+const err = (message: string | undefined) => {
+    CFonts.say(`Invalid Config!`, {
+        font: `chrome`,
+        align: `center`,
+        background: `black`,
+        maxLength: `0`,
+        gradient: [`red`, `#ff5500`],
+        transitionGradient: true,
+    });
+    console.log(``);
+    console.log(c.red.bold(message));
+    console.log(``);
+    process.exit(1);
 };

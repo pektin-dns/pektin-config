@@ -1,7 +1,7 @@
 {
     "name": "@pektin/config",
     "description": "config checker for the pektin dns server",
-    "version": "1.0.51",
+    "version": "1.0.52",
     "main": "dist/js/index.js",
     "types": "src/index.ts",
     "license": "MIT",
@@ -25,6 +25,8 @@
     "dependencies": {
         "@pektin/client": "^1.1.32",
         "ajv": "^8.9.0",
+        "cfonts": "^2.10.0",
+        "chalk": "^5.0.0",
         "lodash": "^4.17.21",
         "yaml": "^1.10.2"
     },
