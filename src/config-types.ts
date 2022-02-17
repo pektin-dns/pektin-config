@@ -164,7 +164,7 @@ export interface PektinConfig {
     };
   };
   reverseProxy: {
-    routing: "local" | "domain";
+    routing: "local" | "domain" | "minikube";
     tempZone: {
       enabled: boolean;
       /**

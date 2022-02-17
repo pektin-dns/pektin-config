@@ -544,7 +544,7 @@ properties:
             - traefikUi
         properties:
             routing:
-                enum: [local, domain]
+                enum: [local, domain, minikube]
                 examples:
                     - meta:
                           updatable: true
