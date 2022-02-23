@@ -651,6 +651,8 @@ properties:
                             required:
                                 - name
                                 - enabled
+                                - url
+                                - accessControlAllowMethods
                             properties:
                                 enabled:
                                     type: boolean
@@ -668,6 +670,24 @@ properties:
                                               use:
                                                   - place: [compose, secrets, traefik, dynamic-config]
                                                     comments: update routing
+                                url:
+                                    type: string
+                                    examples:
+                                        - meta:
+                                              updatable: true
+                                              use:
+                                                  - place: [compose, secrets, traefik, dynamic-config]
+                                                    comments: update routing
+                                accessControlAllowMethods:
+                                    type: array
+                                    items:
+                                        type: string
+                                        examples:
+                                            - meta:
+                                                  updatable: true
+                                                  use:
+                                                      - place: [compose, secrets, traefik, dynamic-config]
+                                                        comments: update routing
 
     ansible:
         type: object

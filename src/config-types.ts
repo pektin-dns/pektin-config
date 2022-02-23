@@ -192,6 +192,8 @@ export interface PektinConfig {
       services: {
         enabled: boolean;
         name: string;
+        url: string;
+        accessControlAllowMethods: string[];
       }[];
     };
   };
