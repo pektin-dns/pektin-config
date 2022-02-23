@@ -644,28 +644,30 @@ properties:
                                       - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
                     services:
-                        type: object
-                        additionalProperties: false
-                        required:
-                            - gandi
-                            - crt
-                        properties:
-                            gandi:
-                                type: boolean
-                                examples:
-                                    - meta:
-                                          updatable: true
-                                          use:
-                                              - place: [compose, secrets, traefik, dynamic-config]
-                                                comments: update routing
-                            crt:
-                                type: boolean
-                                examples:
-                                    - meta:
-                                          updatable: true
-                                          use:
-                                              - place: [compose, secrets, traefik, dynamic-config]
-                                                comments: update routing
+                        type: array
+                        items:
+                            type: object
+                            additionalProperties: false
+                            required:
+                                - name
+                                - enabled
+                            properties:
+                                enabled:
+                                    type: boolean
+                                    examples:
+                                        - meta:
+                                              updatable: true
+                                              use:
+                                                  - place: [compose, secrets, traefik, dynamic-config]
+                                                    comments: update routing
+                                name:
+                                    type: string
+                                    examples:
+                                        - meta:
+                                              updatable: true
+                                              use:
+                                                  - place: [compose, secrets, traefik, dynamic-config]
+                                                    comments: update routing
 
     ansible:
         type: object

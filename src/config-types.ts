@@ -190,9 +190,9 @@ export interface PektinConfig {
        */
       subDomain: string;
       services: {
-        gandi: boolean;
-        crt: boolean;
-      };
+        enabled: boolean;
+        name: string;
+      }[];
     };
   };
   ansible?: {
