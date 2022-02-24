@@ -23,7 +23,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
     }
     const valid = validate(config);
 
-    if (!valid) err(JSON.stringify(validate?.errors));
+    if (!valid) err(`${validate?.errors?.[0].instancePath} ${validate?.errors?.[0].message}`);
 
     // domain must be valid if service is enabled
     Object.values(config.services).forEach((e, i) => {
