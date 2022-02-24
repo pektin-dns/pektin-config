@@ -175,7 +175,11 @@ export interface PektinConfig {
     };
     tls: boolean;
     createTraefik: boolean;
-    traefikUi: boolean;
+    traefikUi: {
+      enabled: boolean;
+      domain: string;
+      subdomain?: string;
+    };
     /**
      * Proxy to external APIs that aren't configured to use CORS.
      */

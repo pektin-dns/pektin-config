@@ -602,13 +602,37 @@ properties:
                               - place: [compose, compose-scripts]
                                 comments: add/remove traefik file with -f
             traefikUi:
-                type: boolean
-                examples:
-                    - meta:
-                          updatable: true
-                          use:
-                              - place: [compose, secrets, traefik, dynamic-config]
-                                comments: update routing
+                type: object
+                additionalProperties: false
+                required:
+                    - enabled
+                    - domain
+                    - subDomain
+                properties:
+                    enabled:
+                        type: boolean
+                        examples:
+                            - meta:
+                                  updatable: true
+                                  use:
+                                      - place: [compose, secrets, traefik, dynamic-config]
+                                        comments: update routing
+                    domain:
+                        type: string
+                        examples:
+                            - meta:
+                                  updatable: true
+                                  use:
+                                      - place: [compose, secrets, traefik, dynamic-config]
+                                        comments: update routing
+                    subdomain:
+                        type: string
+                        examples:
+                            - meta:
+                                  updatable: true
+                                  use:
+                                      - place: [compose, secrets, traefik, dynamic-config]
+                                        comments: update routing
             external:
                 description: Proxy to external APIs that aren't configured to use CORS.
                 type: object
