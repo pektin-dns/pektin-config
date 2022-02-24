@@ -651,7 +651,7 @@ properties:
                             required:
                                 - name
                                 - enabled
-                                - url
+                                - domain
                                 - accessControlAllowMethods
                             properties:
                                 enabled:
@@ -670,7 +670,7 @@ properties:
                                               use:
                                                   - place: [compose, secrets, traefik, dynamic-config]
                                                     comments: update routing
-                                url:
+                                domain:
                                     type: string
                                     examples:
                                         - meta:
