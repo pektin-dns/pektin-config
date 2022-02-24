@@ -625,7 +625,7 @@ properties:
                                   use:
                                       - place: [compose, secrets, traefik, dynamic-config]
                                         comments: update routing
-                    subdomain:
+                    subDomain:
                         type: string
                         examples:
                             - meta:
