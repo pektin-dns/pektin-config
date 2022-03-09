@@ -12,8 +12,6 @@ export const schemaHasAllMeta = ({
     propChain?: string[];
     metas?: any[];
 }) => {
-    console.log(schema);
-
     if (schema.properties === undefined) return propChain;
     const tlValues: Record<string, any>[] = Object.values(schema.properties);
     const tlKeys = Object.keys(schema.properties);
@@ -61,6 +59,7 @@ export const getExamplesMeta = (examples: any[]) => {
         if (typeof ex === `object` && ex.hasOwnProperty(`meta`)) {
             oc++;
             m = ex.meta;
+            delete ex.meta;
         }
     }
     if (oc > 1) {
