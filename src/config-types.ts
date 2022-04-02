@@ -141,6 +141,7 @@ export interface PektinConfig {
     server: {
       enabled: boolean;
       path: string;
+      dockerfile: string;
     };
     api: {
       enabled: boolean;

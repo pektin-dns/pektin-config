@@ -413,6 +413,14 @@ properties:
                                   use:
                                       - place: [compose, env]
                                         comments: update build path in .env file
+                    dockerfile:
+                        type: string
+                        examples:
+                            - meta:
+                                  updatable: true
+                                  use:
+                                      - place: [compose, compose-scripts]
+                                        comments: update dockerfile in .env file
             api:
                 type: object
                 additionalProperties: false
