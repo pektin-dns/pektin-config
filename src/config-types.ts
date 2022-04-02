@@ -145,22 +145,27 @@ export interface PektinConfig {
     api: {
       enabled: boolean;
       path: string;
+      dockerfile: string;
     };
     ui: {
       enabled: boolean;
       path: string;
+      dockerfile: string;
     };
     ribston: {
       enabled: boolean;
       path: string;
+      dockerfile: string;
     };
     recursor: {
       enabled: boolean;
       path: string;
+      dockerfile: string;
     };
     vault: {
       enabled: boolean;
       path: string;
+      dockerfile: string;
     };
   };
   reverseProxy: {
