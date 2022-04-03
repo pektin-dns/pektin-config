@@ -1,5 +1,22 @@
 /* eslint-disable quotes */
 
+/**
+ * A valid UTF8 domain name
+ */
+export type DomainName = string;
+/**
+ * A valid UTF8 domain name not ending with a dot
+ */
+export type SubDomain = string;
+/**
+ * A valid ip(ipv6) address
+ */
+export type Ip = string;
+/**
+ * A valid legacyIp(ipv4) address
+ */
+export type LegacyIp = string;
+export type AnsibleConfig = Hetzner;
 export type AnsibleConfigType = "hetzner";
 export type HetznerServerType =
   | "cx11"
@@ -12,6 +29,10 @@ export type HetznerServerType =
   | "cpx41"
   | "cx51"
   | "cpx51";
+/**
+ * A valid email address
+ */
+export type Email = string;
 
 /**
  * The configuration for the Pektin DNS server
@@ -20,45 +41,21 @@ export interface PektinConfig {
   services: {
     ui: {
       enabled: boolean;
-      /**
-       * A valid UTF8 domain name
-       */
-      domain: string;
-      /**
-       * A valid UTF8 domain name not ending with a dot
-       */
-      subDomain: string;
+      domain: DomainName;
+      subDomain: SubDomain;
     };
     api: {
-      /**
-       * A valid UTF8 domain name
-       */
-      domain: string;
-      /**
-       * A valid UTF8 domain name not ending with a dot
-       */
-      subDomain: string;
+      domain: DomainName;
+      subDomain: SubDomain;
     };
     vault: {
-      /**
-       * A valid UTF8 domain name
-       */
-      domain: string;
-      /**
-       * A valid UTF8 domain name not ending with a dot
-       */
-      subDomain: string;
+      domain: DomainName;
+      subDomain: SubDomain;
     };
     recursor: {
       enabled: boolean;
-      /**
-       * A valid UTF8 domain name
-       */
-      domain: string;
-      /**
-       * A valid UTF8 domain name not ending with a dot
-       */
-      subDomain: string;
+      domain: DomainName;
+      subDomain: SubDomain;
     };
     ribston: {
       enabled: boolean;
@@ -71,10 +68,10 @@ export interface PektinConfig {
   nodes: [
     {
       main?: boolean;
-      ips?: [string, ...string[]];
-      legacyIps?: [string, ...string[]];
+      ips?: [Ip, ...Ip[]];
+      legacyIps?: [LegacyIp, ...LegacyIp[]];
       name: string;
-      ansible?: Hetzner;
+      ansible?: AnsibleConfig;
       setup?: {
         system: string;
         root: {
@@ -88,10 +85,10 @@ export interface PektinConfig {
     },
     ...{
       main?: boolean;
-      ips?: [string, ...string[]];
-      legacyIps?: [string, ...string[]];
+      ips?: [Ip, ...Ip[]];
+      legacyIps?: [LegacyIp, ...LegacyIp[]];
       name: string;
-      ansible?: Hetzner;
+      ansible?: AnsibleConfig;
       setup?: {
         system: string;
         root: {
@@ -106,36 +103,21 @@ export interface PektinConfig {
   ];
   nameservers: [
     {
-      /**
-       * A valid UTF8 domain name not ending with a dot
-       */
-      subDomain?: string;
-      /**
-       * A valid UTF8 domain name
-       */
-      domain: string;
+      subDomain?: SubDomain;
+      domain: DomainName;
       node: string;
       main?: boolean;
     },
     ...{
-      /**
-       * A valid UTF8 domain name not ending with a dot
-       */
-      subDomain?: string;
-      /**
-       * A valid UTF8 domain name
-       */
-      domain: string;
+      subDomain?: SubDomain;
+      domain: DomainName;
       node: string;
       main?: boolean;
     }[]
   ];
   letsencrypt: {
     enabled: boolean;
-    /**
-     * A valid email address
-     */
-    letsencryptEmail: string;
+    letsencryptEmail: Email;
   };
   build: {
     server: {
@@ -191,14 +173,8 @@ export interface PektinConfig {
      */
     external: {
       enabled: boolean;
-      /**
-       * A valid UTF8 domain name
-       */
-      domain: string;
-      /**
-       * A valid UTF8 domain name not ending with a dot
-       */
-      subDomain: string;
+      domain: DomainName;
+      subDomain: SubDomain;
       services: {
         enabled: boolean;
         name: string;

@@ -3,14 +3,14 @@ import { promises as fs } from "fs";
 import { compile } from "json-schema-to-typescript";
 import Ajv from "ajv";
 import _ from "lodash";
-import { schemaHasAllMeta } from "./utils/index.js";
+//import { schemaHasAllMeta } from "./utils/index.js";
 
 {
     // read and compile meta schema; create meta schema validator
-    const readMeta = await fs.readFile(`./meta.schema.yml`, { encoding: `utf-8` });
-    const jsonMeta = yaml.parse(readMeta);
-    const ajvMeta = new Ajv({ strictTuples: false });
-    const validate = ajvMeta.compile(_.cloneDeep(jsonMeta));
+    //const readMeta = await fs.readFile(`./meta.schema.yml`, { encoding: `utf-8` });
+    //const jsonMeta = yaml.parse(readMeta);
+    //const ajvMeta = new Ajv({ strictTuples: false });
+    //const validate = ajvMeta.compile(_.cloneDeep(jsonMeta));
 
     // read pektin config schema
     const read = await fs.readFile(`./pektin-config.schema.yml`, { encoding: `utf-8` });
@@ -19,7 +19,7 @@ import { schemaHasAllMeta } from "./utils/index.js";
     ajv.compile(_.cloneDeep(json));
 
     // check if pektin config schema has meta info for all keys
-    schemaHasAllMeta({ schema: json, validateMeta: validate });
+    //schemaHasAllMeta({ schema: json, validateMeta: validate });
 
     const ts = await compile(_.cloneDeep(json), `PektinConfig`, {
         bannerComment: `/* eslint-disable quotes */`,

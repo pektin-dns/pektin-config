@@ -25,39 +25,12 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: add/remove in routing settings
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove file in compose command
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: add/remove AAAA and A records for this service
+
                     domain:
                         $ref: "#/$defs/DomainName"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, SOA-records NS-records]
-                                        comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
 
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
 
             api:
                 type: object
@@ -68,27 +41,9 @@ properties:
                 properties:
                     domain:
                         $ref: "#/$defs/DomainName"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, SOA-records NS-records]
-                                        comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
 
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
 
             vault:
                 type: object
@@ -99,26 +54,9 @@ properties:
                 properties:
                     domain:
                         $ref: "#/$defs/DomainName"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, SOA-records NS-records]
-                                        comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
+
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
 
             recursor:
                 type: object
@@ -130,38 +68,12 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: add/remove in routing settings
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove file in compose command
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: add/remove AAAA and A records for this service
+
                     domain:
                         $ref: "#/$defs/DomainName"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, SOA-records NS-records]
-                                        comments: update name in SOA and NS records
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
+
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update name in routing config
-                                      - place: [api, dns, services, AAAA-records-A-records]
-                                        comments: update name in AAAA and A records
 
             ribston:
                 type: object
@@ -171,12 +83,6 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: include file in compose command
 
             opa:
                 type: object
@@ -186,22 +92,11 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: include file in compose command
 
     usePolicies:
         type: string
         enum: [ribston, opa, both, false]
-        examples:
-            - meta:
-                  updatable: true
-                  use:
-                      - place: [compose, secrets, .env, USE_POLICIES]
-                        comments: update variable in .env file
+
     nodes:
         type: array
         minItems: 1
@@ -213,47 +108,24 @@ properties:
             properties:
                 main:
                     type: boolean
-                    examples:
-                        - meta:
-                              updatable: false
+
                 ips:
                     type: array
                     minItems: 1
                     items:
                         $ref: "#/$defs/Ip"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [api, dns, nameservers, AAAA-records]
-                                        comments: update address in AAAA records for related nameservers
-                                      - place: [api, dns, services, AAAA-records]
-                                        comments: update address in AAAA records for services if main node
+
                 legacyIps:
                     type: array
                     minItems: 1
                     items:
                         $ref: "#/$defs/LegacyIp"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [api, dns, nameservers, A-records]
-                                        comments: update address in A records for related nameservers
-                                      - place: [api, dns, services, A-records]
-                                        comments: update address in A records for services if main node
 
                 name:
                     type: string
-                    examples:
-                        - meta:
-                              updatable: false
 
                 ansible:
                     $ref: "#/$defs/AnsibleConfig"
-                    examples:
-                        - meta:
-                              updatable: false
 
                 setup:
                     type: object
@@ -267,41 +139,28 @@ properties:
                     properties:
                         system:
                             type: string
-                            examples:
-                                - meta:
-                                      updatable: false
+
                         root:
                             type: object
                             additionalProperties: false
                             properties:
                                 disableSystemdResolved:
                                     type: boolean
-                                    examples:
-                                        - meta:
-                                              updatable: false
+
                                 installDocker:
                                     type: boolean
-                                    examples:
-                                        - meta:
-                                              updatable: false
+
                             required:
                                 - disableSystemdResolved
                                 - installDocker
                         cloneRepo:
                             type: boolean
-                            examples:
-                                - meta:
-                                      updatable: false
+
                         setup:
                             type: boolean
-                            examples:
-                                - meta:
-                                      updatable: false
+
                         start:
                             type: boolean
-                            examples:
-                                - meta:
-                                      updatable: false
 
     nameservers:
         type: array
@@ -316,44 +175,16 @@ properties:
             properties:
                 subDomain:
                     $ref: "#/$defs/SubDomain"
-                    examples:
-                        - meta:
-                              updatable: true
-                              use:
-                                  - place: [api, dns, nameservers, name]
-                                    comments: update value in NS record
-                                  - place: [api, dns, soa, mname]
-                                    comments: update mname in SOA record if main NS
-                                  - place: [compose, secrets, traefik, dynamic-config]
-                                    comments: update name in routing config tls sni and http router
+
                 domain:
                     $ref: "#/$defs/DomainName"
-                    examples:
-                        - meta:
-                              updatable: true
-                              use:
-                                  - place: [api, dns, nameservers, name]
-                                    comments: update value in NS record
-                                  - place: [api, dns, soa, mname]
-                                    comments: update mname in SOA record if main NS
-                                  - place: [compose, secrets, traefik, dynamic-config]
-                                    comments: update name in routing config tls sni and http router
-                                  - place: [vault, signer]
-                                    comments: update signer for new domain
+
                 node:
                     type: string
-                    examples:
-                        - meta:
-                              updatable: false
 
                 main:
                     type: boolean
-                    examples:
-                        - meta:
-                              updatable: true
-                              use:
-                                  - place: [api, dns, soa, mname]
-                                    comments: update mname in SOA record
+
     letsencrypt:
         type: object
         additionalProperties: false
@@ -363,20 +194,9 @@ properties:
         properties:
             enabled:
                 type: boolean
-                examples:
-                    - meta:
-                          updatable: true
-                          use:
-                              - place: [compose, secrets, traefik, static-config, certificate-resolvers]
-                                comments: create cert resolvers in routing config
+
             letsencryptEmail:
                 $ref: "#/$defs/Email"
-                examples:
-                    - meta:
-                          updatable: true
-                          use:
-                              - place: [compose, secrets, traefik, static-config, certificate-resolvers]
-                                comments: update email in the routing config if enabled
 
     build:
         type: object
@@ -399,28 +219,13 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove build file with -f
+
                     path:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, env]
-                                        comments: update build path in .env file
+
                     dockerfile:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: update dockerfile in .env file
+
             api:
                 type: object
                 additionalProperties: false
@@ -431,28 +236,12 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove build file with -f
+
                     path:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, env]
-                                        comments: update build path in .env file
+
                     dockerfile:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: update dockerfile in .env file
 
             ui:
                 type: object
@@ -464,28 +253,12 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove build file with -f
+
                     path:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, env]
-                                        comments: update build path in .env file
+
                     dockerfile:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: update dockerfile in .env file
 
             ribston:
                 type: object
@@ -497,28 +270,12 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove build file with -f
+
                     path:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, env]
-                                        comments: update build path in .env file
+
                     dockerfile:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: update dockerfile in .env file
 
             recursor:
                 type: object
@@ -530,28 +287,12 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove build file with -f
+
                     path:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, env]
-                                        comments: update build path in .env file
+
                     dockerfile:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: update dockerfile in .env file
 
             vault:
                 type: object
@@ -563,28 +304,12 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: add/remove build file with -f
+
                     path:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, env]
-                                        comments: update build path in .env file
+
                     dockerfile:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, compose-scripts]
-                                        comments: update dockerfile in .env file
 
     reverseProxy:
         type: object
@@ -599,12 +324,7 @@ properties:
         properties:
             routing:
                 enum: [local, domain, minikube]
-                examples:
-                    - meta:
-                          updatable: true
-                          use:
-                              - place: [compose, secrets, traefik, dynamic-config]
-                                comments: update routing
+
             tempZone:
                 type: object
                 additionalProperties: false
@@ -615,46 +335,20 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
                     provider:
                         type: string
                         description: Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
                     routing:
                         enum: [local, public]
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [requestPektinDomain]
-                                        comments: function
 
             tls:
                 type: boolean
-                examples:
-                    - meta:
-                          updatable: true
-                          use:
-                              - place: [compose, secrets, traefik, dynamic-config]
-                                comments: update routing
+
             createTraefik:
                 type: boolean
-                examples:
-                    - meta:
-                          updatable: true
-                          use:
-                              - place: [compose, compose-scripts]
-                                comments: add/remove traefik file with -f
+
             traefikUi:
                 type: object
                 additionalProperties: false
@@ -665,28 +359,13 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
                     domain:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
                     subDomain:
                         type: string
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
             external:
                 description: Proxy to external APIs that aren't configured to use CORS.
                 type: object
@@ -699,28 +378,13 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
                     domain:
                         $ref: "#/$defs/DomainName"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-                        examples:
-                            - meta:
-                                  updatable: true
-                                  use:
-                                      - place: [compose, secrets, traefik, dynamic-config]
-                                        comments: update routing
+
                     services:
                         type: array
                         items:
@@ -734,38 +398,17 @@ properties:
                             properties:
                                 enabled:
                                     type: boolean
-                                    examples:
-                                        - meta:
-                                              updatable: true
-                                              use:
-                                                  - place: [compose, secrets, traefik, dynamic-config]
-                                                    comments: update routing
+
                                 name:
                                     type: string
-                                    examples:
-                                        - meta:
-                                              updatable: true
-                                              use:
-                                                  - place: [compose, secrets, traefik, dynamic-config]
-                                                    comments: update routing
+
                                 domain:
                                     type: string
-                                    examples:
-                                        - meta:
-                                              updatable: true
-                                              use:
-                                                  - place: [compose, secrets, traefik, dynamic-config]
-                                                    comments: update routing
+
                                 accessControlAllowMethods:
                                     type: array
                                     items:
                                         type: string
-                                        examples:
-                                            - meta:
-                                                  updatable: true
-                                                  use:
-                                                      - place: [compose, secrets, traefik, dynamic-config]
-                                                        comments: update routing
 
     ansible:
         type: object
@@ -775,9 +418,7 @@ properties:
         properties:
             sshPubKeyName:
                 type: string
-                examples:
-                    - meta:
-                          updatable: false
+
 required:
     - services
     - nodes
