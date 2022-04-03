@@ -21,17 +21,11 @@ properties:
                 additionalProperties: false
                 required:
                     - enabled
-                    - subDomain
-                    - domain
                     - logging
                     - build
                 properties:
                     enabled:
                         type: boolean
-                    domain:
-                        $ref: "#/$defs/DomainName"
-                    subDomain:
-                        $ref: "#/$defs/SubDomain"
                     logging:
                         $ref: "#/$defs/Logging"
                     build:

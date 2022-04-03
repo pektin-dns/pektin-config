@@ -1,5 +1,6 @@
 /* eslint-disable quotes */
 
+export type Logging = string;
 /**
  * A valid UTF8 domain name
  */
@@ -8,7 +9,6 @@ export type DomainName = string;
  * A valid UTF8 domain name not ending with a dot
  */
 export type SubDomain = string;
-export type Logging = string;
 /**
  * A valid ip(ipv6) address
  */
@@ -42,8 +42,6 @@ export interface PektinConfig {
   services: {
     server: {
       enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
       logging: Logging;
       build: BuildFromSource;
     };
