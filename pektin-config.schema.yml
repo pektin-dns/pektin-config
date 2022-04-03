@@ -8,6 +8,7 @@ properties:
         type: object
         additionalProperties: false
         required:
+            - server
             - ui
             - api
             - vault
@@ -15,6 +16,26 @@ properties:
             - ribston
             - opa
         properties:
+            server:
+                type: object
+                additionalProperties: false
+                required:
+                    - enabled
+                    - subDomain
+                    - domain
+                    - logging
+                    - build
+                properties:
+                    enabled:
+                        type: boolean
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
+                    logging:
+                        $ref: "#/$defs/Logging"
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
             ui:
                 type: object
                 additionalProperties: false
@@ -22,42 +43,47 @@ properties:
                     - enabled
                     - subDomain
                     - domain
+                    - build
                 properties:
                     enabled:
                         type: boolean
-
                     domain:
                         $ref: "#/$defs/DomainName"
-
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
             api:
                 type: object
                 additionalProperties: false
                 required:
                     - subDomain
                     - domain
+                    - logging
+                    - build
                 properties:
                     domain:
                         $ref: "#/$defs/DomainName"
-
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-
+                    logging:
+                        $ref: "#/$defs/Logging"
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
             vault:
                 type: object
                 additionalProperties: false
                 required:
                     - subDomain
                     - domain
+                    - build
                 properties:
                     domain:
                         $ref: "#/$defs/DomainName"
-
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
             recursor:
                 type: object
                 additionalProperties: false
@@ -65,38 +91,41 @@ properties:
                     - enabled
                     - subDomain
                     - domain
+                    - build
                 properties:
                     enabled:
                         type: boolean
-
                     domain:
                         $ref: "#/$defs/DomainName"
-
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
             ribston:
                 type: object
                 additionalProperties: false
                 required:
                     - enabled
+                    - build
                 properties:
                     enabled:
                         type: boolean
-
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
             opa:
                 type: object
                 additionalProperties: false
                 required:
                     - enabled
+                    - build
                 properties:
                     enabled:
                         type: boolean
-
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
     usePolicies:
         type: string
         enum: [ribston, opa, both, false]
-
     nodes:
         type: array
         minItems: 1
@@ -108,25 +137,20 @@ properties:
             properties:
                 main:
                     type: boolean
-
                 ips:
                     type: array
                     minItems: 1
                     items:
                         $ref: "#/$defs/Ip"
-
                 legacyIps:
                     type: array
                     minItems: 1
                     items:
                         $ref: "#/$defs/LegacyIp"
-
                 name:
                     type: string
-
                 ansible:
                     $ref: "#/$defs/AnsibleConfig"
-
                 setup:
                     type: object
                     additionalProperties: false
@@ -139,29 +163,23 @@ properties:
                     properties:
                         system:
                             type: string
-
                         root:
                             type: object
                             additionalProperties: false
                             properties:
                                 disableSystemdResolved:
                                     type: boolean
-
                                 installDocker:
                                     type: boolean
-
                             required:
                                 - disableSystemdResolved
                                 - installDocker
                         cloneRepo:
                             type: boolean
-
                         setup:
                             type: boolean
-
                         start:
                             type: boolean
-
     nameservers:
         type: array
         minItems: 1
@@ -175,16 +193,12 @@ properties:
             properties:
                 subDomain:
                     $ref: "#/$defs/SubDomain"
-
                 domain:
                     $ref: "#/$defs/DomainName"
-
                 node:
                     type: string
-
                 main:
                     type: boolean
-
     letsencrypt:
         type: object
         additionalProperties: false
@@ -194,123 +208,8 @@ properties:
         properties:
             enabled:
                 type: boolean
-
             letsencryptEmail:
                 $ref: "#/$defs/Email"
-
-    build:
-        type: object
-        additionalProperties: false
-        required:
-            - server
-            - api
-            - ui
-            - ribston
-            - recursor
-            - vault
-        properties:
-            server:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - path
-                    - dockerfile
-                properties:
-                    enabled:
-                        type: boolean
-
-                    path:
-                        type: string
-
-                    dockerfile:
-                        type: string
-
-            api:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - path
-                    - dockerfile
-                properties:
-                    enabled:
-                        type: boolean
-
-                    path:
-                        type: string
-
-                    dockerfile:
-                        type: string
-
-            ui:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - path
-                    - dockerfile
-                properties:
-                    enabled:
-                        type: boolean
-
-                    path:
-                        type: string
-
-                    dockerfile:
-                        type: string
-
-            ribston:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - path
-                    - dockerfile
-                properties:
-                    enabled:
-                        type: boolean
-
-                    path:
-                        type: string
-
-                    dockerfile:
-                        type: string
-
-            recursor:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - path
-                    - dockerfile
-                properties:
-                    enabled:
-                        type: boolean
-
-                    path:
-                        type: string
-
-                    dockerfile:
-                        type: string
-
-            vault:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - path
-                    - dockerfile
-                properties:
-                    enabled:
-                        type: boolean
-
-                    path:
-                        type: string
-
-                    dockerfile:
-                        type: string
-
     reverseProxy:
         type: object
         additionalProperties: false
@@ -324,7 +223,6 @@ properties:
         properties:
             routing:
                 enum: [local, domain, minikube]
-
             tempZone:
                 type: object
                 additionalProperties: false
@@ -335,20 +233,15 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-
                     provider:
                         type: string
                         description: Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
-
                     routing:
                         enum: [local, public]
-
             tls:
                 type: boolean
-
             createTraefik:
                 type: boolean
-
             traefikUi:
                 type: object
                 additionalProperties: false
@@ -359,13 +252,10 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-
                     domain:
                         type: string
-
                     subDomain:
                         type: string
-
             external:
                 description: Proxy to external APIs that aren't configured to use CORS.
                 type: object
@@ -378,13 +268,10 @@ properties:
                 properties:
                     enabled:
                         type: boolean
-
                     domain:
                         $ref: "#/$defs/DomainName"
-
                     subDomain:
                         $ref: "#/$defs/SubDomain"
-
                     services:
                         type: array
                         items:
@@ -398,18 +285,14 @@ properties:
                             properties:
                                 enabled:
                                     type: boolean
-
                                 name:
                                     type: string
-
                                 domain:
                                     type: string
-
                                 accessControlAllowMethods:
                                     type: array
                                     items:
                                         type: string
-
     ansible:
         type: object
         additionalProperties: false
@@ -418,7 +301,6 @@ properties:
         properties:
             sshPubKeyName:
                 type: string
-
 required:
     - services
     - nodes
@@ -427,8 +309,23 @@ required:
     - reverseProxy
     - build
     - usePolicies
-
 $defs:
+    Logging:
+        type: string
+    BuildFromSource:
+        type: object
+        additionalProperties: false
+        required:
+            - enabled
+            - path
+            - dockerfile
+        properties:
+            enabled:
+                type: boolean
+            path:
+                type: string
+            dockerfile:
+                type: string
     DomainName:
         type: string
         description: "A valid UTF8 domain name"
@@ -478,7 +375,6 @@ $defs:
                 enum: [nbg1, fsn1]
             serverType:
                 $ref: "#/$defs/HetznerServerType"
-
     HetznerServerType:
         type: string
         enum: [cx11, cpx11, cx21, cpx21, cx31, cpx31, cx41, cpx41, cx51, cpx51]

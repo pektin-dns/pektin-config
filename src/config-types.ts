@@ -8,6 +8,7 @@ export type DomainName = string;
  * A valid UTF8 domain name not ending with a dot
  */
 export type SubDomain = string;
+export type Logging = string;
 /**
  * A valid ip(ipv6) address
  */
@@ -39,29 +40,43 @@ export type Email = string;
  */
 export interface PektinConfig {
   services: {
+    server: {
+      enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
+      logging: Logging;
+      build: BuildFromSource;
+    };
     ui: {
       enabled: boolean;
       domain: DomainName;
       subDomain: SubDomain;
+      build: BuildFromSource;
     };
     api: {
       domain: DomainName;
       subDomain: SubDomain;
+      logging: Logging;
+      build: BuildFromSource;
     };
     vault: {
       domain: DomainName;
       subDomain: SubDomain;
+      build: BuildFromSource;
     };
     recursor: {
       enabled: boolean;
       domain: DomainName;
       subDomain: SubDomain;
+      build: BuildFromSource;
     };
     ribston: {
       enabled: boolean;
+      build: BuildFromSource;
     };
     opa: {
       enabled: boolean;
+      build: BuildFromSource;
     };
   };
   usePolicies: "ribston" | "opa" | "both" | false;
@@ -119,38 +134,6 @@ export interface PektinConfig {
     enabled: boolean;
     letsencryptEmail: Email;
   };
-  build: {
-    server: {
-      enabled: boolean;
-      path: string;
-      dockerfile: string;
-    };
-    api: {
-      enabled: boolean;
-      path: string;
-      dockerfile: string;
-    };
-    ui: {
-      enabled: boolean;
-      path: string;
-      dockerfile: string;
-    };
-    ribston: {
-      enabled: boolean;
-      path: string;
-      dockerfile: string;
-    };
-    recursor: {
-      enabled: boolean;
-      path: string;
-      dockerfile: string;
-    };
-    vault: {
-      enabled: boolean;
-      path: string;
-      dockerfile: string;
-    };
-  };
   reverseProxy: {
     routing: "local" | "domain" | "minikube";
     tempZone: {
@@ -186,6 +169,11 @@ export interface PektinConfig {
   ansible?: {
     sshPubKeyName: string;
   };
+}
+export interface BuildFromSource {
+  enabled: boolean;
+  path: string;
+  dockerfile: string;
 }
 export interface Hetzner {
   configType: AnsibleConfigType;
