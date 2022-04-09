@@ -55,7 +55,10 @@ properties:
                     - domain
                     - logging
                     - build
+                    - perimeterAuth
                 properties:
+                    perimeterAuth:
+                        type: boolean
                     domain:
                         $ref: "#/$defs/DomainName"
                     subDomain:
@@ -71,7 +74,10 @@ properties:
                     - subDomain
                     - domain
                     - build
+                    - perimeterAuth
                 properties:
+                    perimeterAuth:
+                        type: boolean
                     domain:
                         $ref: "#/$defs/DomainName"
                     subDomain:

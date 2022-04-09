@@ -52,12 +52,14 @@ export interface PektinConfig {
       build: BuildFromSource;
     };
     api: {
+      perimeterAuth: boolean;
       domain: DomainName;
       subDomain: SubDomain;
       logging: Logging;
       build: BuildFromSource;
     };
     vault: {
+      perimeterAuth: boolean;
       domain: DomainName;
       subDomain: SubDomain;
       build: BuildFromSource;
