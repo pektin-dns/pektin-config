@@ -12,7 +12,7 @@ properties:
             - ui
             - api
             - vault
-            - tnt
+            - trinitrotoluol
             - ribston
             - opa
         properties:
@@ -84,7 +84,7 @@ properties:
                         $ref: "#/$defs/SubDomain"
                     build:
                         $ref: "#/$defs/BuildFromSource"
-            tnt:
+            trinitrotoluol:
                 type: object
                 additionalProperties: false
                 required:

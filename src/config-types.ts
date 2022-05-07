@@ -64,7 +64,7 @@ export interface PektinConfig {
       subDomain: SubDomain;
       build: BuildFromSource;
     };
-    tnt: {
+    trinitrotoluol: {
       enabled: boolean;
       domain: DomainName;
       subDomain: SubDomain;
