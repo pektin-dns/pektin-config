@@ -29,7 +29,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
     Object.values(config.services).forEach((e, i) => {
         const s = Object.keys(config.services);
         /*@ts-ignore*/
-        if (e.enabled !== false && e.domain && e.domain.length < 1) err(`${s[i]} is enabled but it's domain is invalid`);
+        if (e.enabled !== false && e.domain && e.domain.length < 3) err(`${s[i]} is enabled but it's domain is invalid`);
     });
 
     // nodes must contain exactly one main node

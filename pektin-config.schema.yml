@@ -12,7 +12,7 @@ properties:
             - ui
             - api
             - vault
-            - recursor
+            - tnt
             - ribston
             - opa
         properties:
@@ -84,7 +84,7 @@ properties:
                         $ref: "#/$defs/SubDomain"
                     build:
                         $ref: "#/$defs/BuildFromSource"
-            recursor:
+            tnt:
                 type: object
                 additionalProperties: false
                 required:
