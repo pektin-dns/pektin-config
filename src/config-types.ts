@@ -19,17 +19,7 @@ export type Ip = string;
 export type LegacyIp = string;
 export type AnsibleConfig = Hetzner;
 export type AnsibleConfigType = "hetzner";
-export type HetznerServerType =
-  | "cx11"
-  | "cpx11"
-  | "cx21"
-  | "cpx21"
-  | "cx31"
-  | "cpx31"
-  | "cx41"
-  | "cpx41"
-  | "cx51"
-  | "cpx51";
+export type HetznerServerType = "cx11" | "cpx11" | "cx21" | "cpx21" | "cx31" | "cpx31" | "cx41" | "cpx41" | "cx51" | "cpx51";
 /**
  * A valid email address
  */
@@ -39,146 +29,146 @@ export type Email = string;
  * The configuration for the Pektin DNS server
  */
 export interface PektinConfig {
-  services: {
-    server: {
-      enabled: boolean;
-      logging: Logging;
-      build: BuildFromSource;
-    };
-    ui: {
-      enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
-      build: BuildFromSource;
-    };
-    api: {
-      perimeterAuth: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
-      logging: Logging;
-      build: BuildFromSource;
-    };
-    vault: {
-      perimeterAuth: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
-      build: BuildFromSource;
-    };
-    trinitrotoluol: {
-      enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
-      build: BuildFromSource;
-    };
-    ribston: {
-      enabled: boolean;
-      build: BuildFromSource;
-    };
-    opa: {
-      enabled: boolean;
-      build: BuildFromSource;
-    };
-  };
-  usePolicies: "ribston" | "opa" | "both" | false;
-  nodes: [
-    {
-      main?: boolean;
-      ips?: [Ip, ...Ip[]];
-      legacyIps?: [LegacyIp, ...LegacyIp[]];
-      name: string;
-      ansible?: AnsibleConfig;
-      setup?: {
-        system: string;
-        root: {
-          disableSystemdResolved: boolean;
-          installDocker: boolean;
+    services: {
+        server: {
+            enabled: boolean;
+            logging: Logging;
+            build: BuildFromSource;
         };
-        cloneRepo: boolean;
-        setup: boolean;
-        start: boolean;
-      };
-    },
-    ...{
-      main?: boolean;
-      ips?: [Ip, ...Ip[]];
-      legacyIps?: [LegacyIp, ...LegacyIp[]];
-      name: string;
-      ansible?: AnsibleConfig;
-      setup?: {
-        system: string;
-        root: {
-          disableSystemdResolved: boolean;
-          installDocker: boolean;
+        ui: {
+            enabled: boolean;
+            domain: DomainName;
+            subDomain: SubDomain;
+            build: BuildFromSource;
         };
-        cloneRepo: boolean;
-        setup: boolean;
-        start: boolean;
-      };
-    }[]
-  ];
-  nameservers: [
-    {
-      subDomain?: SubDomain;
-      domain: DomainName;
-      node: string;
-      main?: boolean;
-    },
-    ...{
-      subDomain?: SubDomain;
-      domain: DomainName;
-      node: string;
-      main?: boolean;
-    }[]
-  ];
-  letsencrypt: {
-    enabled: boolean;
-    letsencryptEmail: Email;
-  };
-  reverseProxy: {
-    routing: "local" | "domain" | "minikube";
-    tempZone: {
-      enabled: boolean;
-      /**
-       * Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
-       */
-      provider: string;
-      routing: "local" | "public";
+        api: {
+            perimeterAuth: boolean;
+            domain: DomainName;
+            subDomain: SubDomain;
+            logging: Logging;
+            build: BuildFromSource;
+        };
+        vault: {
+            perimeterAuth: boolean;
+            domain: DomainName;
+            subDomain: SubDomain;
+            build: BuildFromSource;
+        };
+        tnt: {
+            enabled: boolean;
+            domain: DomainName;
+            subDomain: SubDomain;
+            build: BuildFromSource;
+        };
+        ribston: {
+            enabled: boolean;
+            build: BuildFromSource;
+        };
+        opa: {
+            enabled: boolean;
+            build: BuildFromSource;
+        };
     };
-    tls: boolean;
-    createTraefik: boolean;
-    traefikUi: {
-      enabled: boolean;
-      domain: string;
-      subDomain: string;
-    };
-    /**
-     * Proxy to external APIs that aren't configured to use CORS.
-     */
-    external: {
-      enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
-      services: {
+    usePolicies: "ribston" | "opa" | "both" | false;
+    nodes: [
+        {
+            main?: boolean;
+            ips?: [Ip, ...Ip[]];
+            legacyIps?: [LegacyIp, ...LegacyIp[]];
+            name: string;
+            ansible?: AnsibleConfig;
+            setup?: {
+                system: string;
+                root: {
+                    disableSystemdResolved: boolean;
+                    installDocker: boolean;
+                };
+                cloneRepo: boolean;
+                setup: boolean;
+                start: boolean;
+            };
+        },
+        ...{
+            main?: boolean;
+            ips?: [Ip, ...Ip[]];
+            legacyIps?: [LegacyIp, ...LegacyIp[]];
+            name: string;
+            ansible?: AnsibleConfig;
+            setup?: {
+                system: string;
+                root: {
+                    disableSystemdResolved: boolean;
+                    installDocker: boolean;
+                };
+                cloneRepo: boolean;
+                setup: boolean;
+                start: boolean;
+            };
+        }[]
+    ];
+    nameservers: [
+        {
+            subDomain?: SubDomain;
+            domain: DomainName;
+            node: string;
+            main?: boolean;
+        },
+        ...{
+            subDomain?: SubDomain;
+            domain: DomainName;
+            node: string;
+            main?: boolean;
+        }[]
+    ];
+    letsencrypt: {
         enabled: boolean;
-        name: string;
-        domain: string;
-        accessControlAllowMethods: string[];
-      }[];
+        letsencryptEmail: Email;
     };
-  };
-  ansible?: {
-    sshPubKeyName: string;
-  };
+    reverseProxy: {
+        routing: "local" | "domain" | "minikube";
+        tempZone: {
+            enabled: boolean;
+            /**
+             * Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
+             */
+            provider: string;
+            routing: "local" | "public";
+        };
+        tls: boolean;
+        createTraefik: boolean;
+        traefikUi: {
+            enabled: boolean;
+            domain: string;
+            subDomain: string;
+        };
+        /**
+         * Proxy to external APIs that aren't configured to use CORS.
+         */
+        external: {
+            enabled: boolean;
+            domain: DomainName;
+            subDomain: SubDomain;
+            services: {
+                enabled: boolean;
+                name: string;
+                domain: string;
+                accessControlAllowMethods: string[];
+            }[];
+        };
+    };
+    ansible?: {
+        sshPubKeyName: string;
+    };
 }
 export interface BuildFromSource {
-  enabled: boolean;
-  path: string;
-  dockerfile: string;
+    enabled: boolean;
+    path: string;
+    dockerfile: string;
 }
 export interface Hetzner {
-  configType: AnsibleConfigType;
-  floatingIp?: boolean;
-  floatingLegacyIp?: boolean;
-  location?: "nbg1" | "fsn1";
-  serverType?: HetznerServerType;
+    configType: AnsibleConfigType;
+    floatingIp?: boolean;
+    floatingLegacyIp?: boolean;
+    location?: "nbg1" | "fsn1";
+    serverType?: HetznerServerType;
 }
