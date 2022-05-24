@@ -68,15 +68,14 @@ export const createConfigureFloatingIpsScript = async (configPath: string, outDi
 
         if (node.ips?.length || node.legacyIps?.length) {
             let file = `
-            network:
-                version: 2
-                renderer: networkd
-                ethernets:
-                    eth0:
-                        addresses:
-${node.ips?.length ? `                            - ` + node.ips[0] + `/64\n` : ``}
-${node.legacyIps?.length ? `                            - ` + node.legacyIps[0] + `/32\n` : ``}
-            `;
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        eth0:
+            addresses:
+${node.ips?.length ? `                - ` + node.ips[0] + `/64` : ``}
+${node.legacyIps?.length ? `                - ` + node.legacyIps[0] + `/32` : ``}`;
 
             file = `echo '${file}' > /etc/netplan/60-floating-ip.yaml\nnetplan apply`;
             await fs.mkdir(outDir, { recursive: true });
