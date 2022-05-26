@@ -15,6 +15,7 @@ properties:
             - tnt
             - ribston
             - opa
+            - jaeger
         properties:
             server:
                 type: object
@@ -113,6 +114,17 @@ properties:
                     build:
                         $ref: "#/$defs/BuildFromSource"
             opa:
+                type: object
+                additionalProperties: false
+                required:
+                    - enabled
+                    - build
+                properties:
+                    enabled:
+                        type: boolean
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
+            jaeger:
                 type: object
                 additionalProperties: false
                 required:

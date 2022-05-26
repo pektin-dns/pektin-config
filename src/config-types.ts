@@ -78,6 +78,10 @@ export interface PektinConfig {
       enabled: boolean;
       build: BuildFromSource;
     };
+    jaeger: {
+      enabled: boolean;
+      build: BuildFromSource;
+    };
   };
   usePolicies: "ribston" | "opa" | "both" | false;
   nodes: [
