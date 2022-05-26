@@ -81,6 +81,8 @@ export interface PektinConfig {
     jaeger: {
       enabled: boolean;
       build: BuildFromSource;
+      domain: DomainName;
+      subDomain: SubDomain;
     };
   };
   usePolicies: "ribston" | "opa" | "both" | false;

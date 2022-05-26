@@ -130,11 +130,17 @@ properties:
                 required:
                     - enabled
                     - build
+                    - subDomain
+                    - domain
                 properties:
                     enabled:
                         type: boolean
                     build:
                         $ref: "#/$defs/BuildFromSource"
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
     usePolicies:
         type: string
         enum: [ribston, opa, both, false]
