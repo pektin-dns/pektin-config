@@ -142,16 +142,10 @@ properties:
                 additionalProperties: false
                 required:
                     - enabled
-                    - subDomain
-                    - domain
                     - build
                 properties:
                     enabled:
                         type: boolean
-                    domain:
-                        $ref: "#/$defs/DomainName"
-                    subDomain:
-                        $ref: "#/$defs/SubDomain"
                     build:
                         $ref: "#/$defs/BuildFromSource"
             grafana:

@@ -84,8 +84,6 @@ export interface PektinConfig {
     };
     prometheus: {
       enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
       build: BuildFromSource;
     };
     grafana: {
