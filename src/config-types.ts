@@ -80,6 +80,16 @@ export interface PektinConfig {
     };
     jaeger: {
       enabled: boolean;
+      build: BuildFromSource;
+    };
+    prometheus: {
+      enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
+      build: BuildFromSource;
+    };
+    grafana: {
+      enabled: boolean;
       domain: DomainName;
       subDomain: SubDomain;
       build: BuildFromSource;

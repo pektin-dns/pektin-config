@@ -16,6 +16,8 @@ properties:
             - ribston
             - opa
             - jaeger
+            - prometheus
+            - grafana
         properties:
             server:
                 type: object
@@ -125,6 +127,34 @@ properties:
                     build:
                         $ref: "#/$defs/BuildFromSource"
             jaeger:
+                type: object
+                additionalProperties: false
+                required:
+                    - enabled
+                    - build
+                properties:
+                    enabled:
+                        type: boolean
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
+            prometheus:
+                type: object
+                additionalProperties: false
+                required:
+                    - enabled
+                    - subDomain
+                    - domain
+                    - build
+                properties:
+                    enabled:
+                        type: boolean
+                    domain:
+                        $ref: "#/$defs/DomainName"
+                    subDomain:
+                        $ref: "#/$defs/SubDomain"
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
+            grafana:
                 type: object
                 additionalProperties: false
                 required:
