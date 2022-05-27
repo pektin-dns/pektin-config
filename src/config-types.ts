@@ -80,6 +80,8 @@ export interface PektinConfig {
     };
     jaeger: {
       enabled: boolean;
+      domain: DomainName;
+      subDomain: SubDomain;
       build: BuildFromSource;
     };
   };
