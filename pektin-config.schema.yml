@@ -320,6 +320,7 @@ properties:
                     - subDomain
                     - domain
                     - services
+                    - build
                 properties:
                     enabled:
                         type: boolean
