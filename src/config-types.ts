@@ -92,6 +92,10 @@ export interface PektinConfig {
       subDomain: SubDomain;
       build: BuildFromSource;
     };
+    alert: {
+      enabled: boolean;
+      build: BuildFromSource;
+    };
   };
   usePolicies: "ribston" | "opa" | "both" | false;
   nodes: [
