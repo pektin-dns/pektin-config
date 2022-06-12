@@ -327,6 +327,8 @@ properties:
                         $ref: "#/$defs/DomainName"
                     subDomain:
                         $ref: "#/$defs/SubDomain"
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
                     services:
                         type: array
                         items:

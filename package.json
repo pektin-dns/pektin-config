@@ -1,7 +1,7 @@
 {
     "name": "@pektin/config",
     "description": "config checker for the pektin dns server",
-    "version": "1.1.14",
+    "version": "1.1.15",
     "main": "dist/js/index.js",
     "types": "src/index.ts",
     "license": "MIT",
@@ -47,6 +47,7 @@
         "start": "tsc --watch",
         "check-config": "node dist/js/check-config.js",
         "before-publish": "yarn build; yarn compile-deno",
+        "before-push": "yarn compile-schema",
         "compile-deno": "sh scripts/compile-deno.sh",
         "compile-schema": "yarn build && node dist/js/compile-schema.js",
         "upgrade-pektin": "yarn upgrade --latest @pektin/client"
