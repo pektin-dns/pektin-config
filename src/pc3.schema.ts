@@ -18,6 +18,10 @@ export interface PektinClientConnectionConfig {
   };
   info?: {
     apiCredentials?: {
+      gandi?: {
+        apiKey?: string;
+        [k: string]: unknown;
+      }[];
       [k: string]: unknown;
     };
   };
