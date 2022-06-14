@@ -40,3 +40,17 @@ import _ from "lodash";
     await fs.writeFile(`src/foreign-apis-types.ts`, ts);
     await fs.writeFile(`foreign-apis.schema.json`, JSON.stringify(json));
 }
+
+{
+    const read = await fs.readFile(`./pc3.schema.yml`, { encoding: `utf-8` });
+    const json = yaml.parse(read);
+    const ajv = new Ajv({ strictTuples: false });
+
+    ajv.compile(_.cloneDeep(json));
+
+    const ts = await compile(_.cloneDeep(json), `PC3`, {
+        bannerComment: `/* eslint-disable quotes */`,
+    });
+    await fs.writeFile(`src/pc3.schema.ts`, ts);
+    await fs.writeFile(`pc3.schema.json`, JSON.stringify(json));
+}
