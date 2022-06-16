@@ -340,6 +340,7 @@ properties:
                                 - enabled
                                 - domain
                                 - accessControlAllowMethods
+                                - accessControlAllowHeaders
                             properties:
                                 enabled:
                                     type: boolean
@@ -348,6 +349,10 @@ properties:
                                 domain:
                                     type: string
                                 accessControlAllowMethods:
+                                    type: array
+                                    items:
+                                        type: string
+                                accessControlAllowHeaders:
                                     type: array
                                     items:
                                         type: string

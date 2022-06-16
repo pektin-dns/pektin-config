@@ -182,6 +182,7 @@ export interface PektinConfig {
         name: string;
         domain: string;
         accessControlAllowMethods: string[];
+        accessControlAllowHeaders: string[];
       }[];
     };
   };
