@@ -33,13 +33,14 @@ properties:
                 additionalProperties: true
                 properties:
                     gandi:
-                        type: array
-                        items:
-                            type: object
-                            additionalProperties: true
-                            properties:
-                                apiKey:
-                                    type: string
+                        type: object
+                        properties:
+                            "0":
+                                type: object
+                                additionalProperties: true
+                                properties:
+                                    apiKey:
+                                        type: string
 
 required:
     - username
