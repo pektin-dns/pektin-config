@@ -64,6 +64,10 @@ export interface PektinConfig {
       subDomain: SubDomain;
       build: BuildFromSource;
     };
+    zertificat: {
+      enabled: boolean;
+      build: BuildFromSource;
+    };
     tnt: {
       enabled: boolean;
       domain: DomainName;
