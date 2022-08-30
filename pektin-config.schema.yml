@@ -375,7 +375,6 @@ required:
     - services
     - nodes
     - nameservers
-    - letsencrypt
     - reverseProxy
     - usePolicies
 $defs:
