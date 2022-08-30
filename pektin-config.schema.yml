@@ -95,11 +95,17 @@ properties:
                 required:
                     - enabled
                     - build
+                    - acmeEmail
+                    - acmeEndpoint
                 properties:
                     enabled:
                         type: boolean
                     build:
                         $ref: "#/$defs/BuildFromSource"
+                    acmeEndpoint:
+                        type: string
+                    acmeEmail:
+                        $ref: "#/$defs/Email"
             tnt:
                 type: object
                 additionalProperties: false
@@ -266,17 +272,6 @@ properties:
                     type: string
                 main:
                     type: boolean
-    letsencrypt:
-        type: object
-        additionalProperties: false
-        required:
-            - enabled
-            - letsencryptEmail
-        properties:
-            enabled:
-                type: boolean
-            letsencryptEmail:
-                $ref: "#/$defs/Email"
     reverseProxy:
         type: object
         additionalProperties: false

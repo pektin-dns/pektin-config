@@ -10,6 +10,10 @@ export type DomainName = string;
  */
 export type SubDomain = string;
 /**
+ * A valid email address
+ */
+export type Email = string;
+/**
  * A valid ip(ipv6) address
  */
 export type Ip = string;
@@ -30,10 +34,6 @@ export type HetznerServerType =
   | "cpx41"
   | "cx51"
   | "cpx51";
-/**
- * A valid email address
- */
-export type Email = string;
 
 /**
  * The configuration for the Pektin DNS server
@@ -67,6 +67,8 @@ export interface PektinConfig {
     zertificat: {
       enabled: boolean;
       build: BuildFromSource;
+      acmeEndpoint: string;
+      acmeEmail: Email;
     };
     tnt: {
       enabled: boolean;
@@ -152,10 +154,6 @@ export interface PektinConfig {
       main?: boolean;
     }[]
   ];
-  letsencrypt: {
-    enabled: boolean;
-    letsencryptEmail: Email;
-  };
   reverseProxy: {
     routing: "local" | "domain" | "minikube";
     tempZone: {
