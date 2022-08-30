@@ -106,7 +106,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
     }
 
     // if certificates are enabled the letsencrypt email must be set
-    if (config.letsencrypt.enabled && config.letsencrypt.letsencryptEmail.length < 6) {
+    if (config.services.zertificat.acmeEmail && config.services.zertificat.acmeEmail.length < 6) {
         err(`letsencrypt is enabled but the letsencryptEmail is invalid`);
     }
     if (!silentOnSuccess) {
