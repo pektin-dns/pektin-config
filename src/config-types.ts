@@ -69,6 +69,9 @@ export interface PektinConfig {
       build: BuildFromSource;
       acmeEndpoint: string;
       acmeEmail: Email;
+      /**
+       * This OVERRIDES the acmeEndpoint internally as well as build.dockerfile
+       */
       usePebble?: boolean;
     };
     tnt: {

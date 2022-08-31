@@ -1,7 +1,7 @@
 {
     "name": "@pektin/config",
     "description": "config checker for the pektin dns server",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "main": "dist/js/index.js",
     "types": "src/index.ts",
     "license": "MIT",

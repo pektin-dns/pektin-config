@@ -107,6 +107,7 @@ properties:
                     acmeEmail:
                         $ref: "#/$defs/Email"
                     usePebble:
+                        description: This OVERRIDES the acmeEndpoint internally as well as build.dockerfile
                         type: boolean
             tnt:
                 type: object
