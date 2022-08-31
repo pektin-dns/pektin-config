@@ -69,6 +69,7 @@ export interface PektinConfig {
       build: BuildFromSource;
       acmeEndpoint: string;
       acmeEmail: Email;
+      usePebble?: boolean;
     };
     tnt: {
       enabled: boolean;
