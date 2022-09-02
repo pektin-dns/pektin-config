@@ -64,6 +64,36 @@ export interface PektinConfig {
       subDomain: SubDomain;
       build: BuildFromSource;
     };
+    verkehr: {
+      enabled?: boolean;
+      build: BuildFromSource;
+      routing: "local" | "domain" | "minikube";
+      tempZone: {
+        enabled: boolean;
+        /**
+         * Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
+         */
+        provider: string;
+        routing: "local" | "public";
+      };
+      tls: boolean;
+      /**
+       * Proxy to external APIs that aren't configured to use CORS.
+       */
+      external: {
+        enabled: boolean;
+        domain: DomainName;
+        subDomain: SubDomain;
+        build: BuildFromSource;
+        services: {
+          enabled: boolean;
+          name: string;
+          domain: string;
+          accessControlAllowMethods: string[];
+          accessControlAllowHeaders: string[];
+        }[];
+      };
+    };
     zertificat: {
       enabled: boolean;
       build: BuildFromSource;
@@ -158,40 +188,6 @@ export interface PektinConfig {
       main?: boolean;
     }[]
   ];
-  reverseProxy: {
-    routing: "local" | "domain" | "minikube";
-    tempZone: {
-      enabled: boolean;
-      /**
-       * Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
-       */
-      provider: string;
-      routing: "local" | "public";
-    };
-    tls: boolean;
-    createTraefik: boolean;
-    traefikUi: {
-      enabled: boolean;
-      domain: string;
-      subDomain: string;
-    };
-    /**
-     * Proxy to external APIs that aren't configured to use CORS.
-     */
-    external: {
-      enabled: boolean;
-      domain: DomainName;
-      subDomain: SubDomain;
-      build: BuildFromSource;
-      services: {
-        enabled: boolean;
-        name: string;
-        domain: string;
-        accessControlAllowMethods: string[];
-        accessControlAllowHeaders: string[];
-      }[];
-    };
-  };
   ansible?: {
     sshPubKeyName: string;
   };

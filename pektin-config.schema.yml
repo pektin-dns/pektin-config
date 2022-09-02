@@ -20,6 +20,7 @@ properties:
             - prometheus
             - grafana
             - alert
+            - verkehr
         properties:
             server:
                 type: object
@@ -89,6 +90,84 @@ properties:
                         $ref: "#/$defs/SubDomain"
                     build:
                         $ref: "#/$defs/BuildFromSource"
+            verkehr:
+                type: object
+                additionalProperties: false
+                required:
+                    - build
+                    - routing
+                    - tls
+                    - external
+                    - tempZone
+                properties:
+                    enabled:
+                        type: boolean
+                    build:
+                        $ref: "#/$defs/BuildFromSource"
+                    routing:
+                        enum: [local, domain, minikube]
+                    tempZone:
+                        type: object
+                        additionalProperties: false
+                        required:
+                            - enabled
+                            - provider
+                            - routing
+                        properties:
+                            enabled:
+                                type: boolean
+                            provider:
+                                type: string
+                                description: Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
+                            routing:
+                                enum: [local, public]
+                    tls:
+                        type: boolean
+                    external:
+                        description: Proxy to external APIs that aren't configured to use CORS.
+                        type: object
+                        additionalProperties: false
+                        required:
+                            - enabled
+                            - subDomain
+                            - domain
+                            - services
+                            - build
+                        properties:
+                            enabled:
+                                type: boolean
+                            domain:
+                                $ref: "#/$defs/DomainName"
+                            subDomain:
+                                $ref: "#/$defs/SubDomain"
+                            build:
+                                $ref: "#/$defs/BuildFromSource"
+                            services:
+                                type: array
+                                items:
+                                    type: object
+                                    additionalProperties: false
+                                    required:
+                                        - name
+                                        - enabled
+                                        - domain
+                                        - accessControlAllowMethods
+                                        - accessControlAllowHeaders
+                                    properties:
+                                        enabled:
+                                            type: boolean
+                                        name:
+                                            type: string
+                                        domain:
+                                            type: string
+                                        accessControlAllowMethods:
+                                            type: array
+                                            items:
+                                                type: string
+                                        accessControlAllowHeaders:
+                                            type: array
+                                            items:
+                                                type: string
             zertificat:
                 type: object
                 additionalProperties: false
@@ -275,97 +354,6 @@ properties:
                     type: string
                 main:
                     type: boolean
-    reverseProxy:
-        type: object
-        additionalProperties: false
-        required:
-            - routing
-            - tls
-            - createTraefik
-            - external
-            - tempZone
-            - traefikUi
-        properties:
-            routing:
-                enum: [local, domain, minikube]
-            tempZone:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - provider
-                    - routing
-                properties:
-                    enabled:
-                        type: boolean
-                    provider:
-                        type: string
-                        description: Get a temporary subdomain for an easy and secure access while your domain changes still propagate. This subdomain will exist for 7 days, will then be deleted and not be recoverable afterwards. For pektin.zone. this implies your acceptance of our privacy policy.
-                    routing:
-                        enum: [local, public]
-            tls:
-                type: boolean
-            createTraefik:
-                type: boolean
-            traefikUi:
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - domain
-                    - subDomain
-                properties:
-                    enabled:
-                        type: boolean
-                    domain:
-                        type: string
-                    subDomain:
-                        type: string
-            external:
-                description: Proxy to external APIs that aren't configured to use CORS.
-                type: object
-                additionalProperties: false
-                required:
-                    - enabled
-                    - subDomain
-                    - domain
-                    - services
-                    - build
-                properties:
-                    enabled:
-                        type: boolean
-                    domain:
-                        $ref: "#/$defs/DomainName"
-                    subDomain:
-                        $ref: "#/$defs/SubDomain"
-                    build:
-                        $ref: "#/$defs/BuildFromSource"
-                    services:
-                        type: array
-                        items:
-                            type: object
-                            additionalProperties: false
-                            required:
-                                - name
-                                - enabled
-                                - domain
-                                - accessControlAllowMethods
-                                - accessControlAllowHeaders
-                            properties:
-                                enabled:
-                                    type: boolean
-                                name:
-                                    type: string
-                                domain:
-                                    type: string
-                                accessControlAllowMethods:
-                                    type: array
-                                    items:
-                                        type: string
-                                accessControlAllowHeaders:
-                                    type: array
-                                    items:
-                                        type: string
     ansible:
         type: object
         additionalProperties: false
@@ -378,7 +366,6 @@ required:
     - services
     - nodes
     - nameservers
-    - reverseProxy
     - usePolicies
 $defs:
     Logging:
