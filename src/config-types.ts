@@ -84,7 +84,6 @@ export interface PektinConfig {
         enabled: boolean;
         domain: DomainName;
         subDomain: SubDomain;
-        build: BuildFromSource;
         services: {
           enabled: boolean;
           name: string;
