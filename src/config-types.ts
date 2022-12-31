@@ -2,11 +2,11 @@
 
 export type Logging = string;
 /**
- * A valid UTF8 domain name
+ * A valid UTF8 domain name NOT ending with a dot
  */
 export type DomainName = string;
 /**
- * A valid UTF8 domain name not ending with a dot
+ * A valid UTF8 domain name NOT ending with a dot
  */
 export type SubDomain = string;
 /**
@@ -65,7 +65,7 @@ export interface PektinConfig {
       build: BuildFromSource;
     };
     verkehr: {
-      enabled?: boolean;
+      enabled: boolean;
       build: BuildFromSource;
       routing: "local" | "domain" | "minikube";
       tempZone: {
