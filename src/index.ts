@@ -7,7 +7,7 @@ import _ from "lodash";
 import cfonts from "cfonts";
 import c from "chalk";
 
-export const checkConfig = async (inputPath: string, schemaPath: string, mode: `yaml` | `json` = `json`, silentOnSuccess = true) => {
+export const checkConfig = async (inputPath: string, schemaPath: string, silentOnSuccess = true) => {
     const schema = yaml.parse(await fs.readFile(schemaPath, { encoding: `utf-8` }));
     /*@ts-ignore*/
     const ajv = new Ajv({ strictTuples: false });
@@ -16,7 +16,7 @@ export const checkConfig = async (inputPath: string, schemaPath: string, mode: `
     const input = await fs.readFile(inputPath, { encoding: `utf-8` });
     let config: PektinConfig = {} as PektinConfig;
     try {
-        config = mode === `yaml` ? yaml.parse(input) : JSON.parse(input);
+        config = yaml.parse(input);
     } catch (error) {
         /*@ts-ignore*/
         err(error.message);
